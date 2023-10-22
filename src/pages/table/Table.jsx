@@ -99,17 +99,17 @@ export default function Table({ offers }) {
                       {departmentButton ? (
                         <button
                           onClick={handleOnClickUnassignedDepartment}
-                          className={`rounded  p-1 text-gray-300 transition-all duration-300  ${
-                            unassignedDepartment
-                              ? 'bg-red-800 hover:bg-red-600'
-                              : 'bg-blue-800 hover:bg-blue-600'
-                          }`}
+                          className={
+                            'rounded  bg-red-900/80 p-1 text-gray-300 transition-all  duration-300 hover:bg-red-700'
+                          }
                         >
                           {unassignedDepartment
                             ? 'Sin Departamento'
                             : 'Departamento/s'}
                         </button>
-                      ) : 'Departamento/s'}
+                      ) : (
+                        'Departamento/s'
+                      )}
                     </th>
                   </>
                 )}

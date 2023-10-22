@@ -79,7 +79,7 @@ export default function UpdateOffers({ totalOffers }) {
           department !== departmentList.GestionNav.endOffers &&
           department !== departmentList.GestionNav.deletedOffers && (
             <button
-              className={`h-10 ${RedButton}`}
+              className={RedButton}
               onClick={() => {
                 setShowOffer(true)
                 setSelectedOffer(null)

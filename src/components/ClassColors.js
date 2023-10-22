@@ -1,16 +1,16 @@
 export const RedButton =
-  'p-2 rounded text-gray-200 bg-red-700/50 hover:bg-red-500/80 transition-colors duration-300'
+  'p-2 rounded text-gray-200 bg-red-700/50 border border-transparent hover:bg-red-500/80 transition-colors duration-300'
 export const GreyButton =
-  'p-2 rounded text-gray-600 bg-gray-700/50 transition-colors duration-300'
+  'p-2 rounded text-gray-600 bg-transparent border border-gray-800 transition-colors duration-300'
 
 export const BlueButton =
-  'p-2 rounded text-gray-200 bg-blue-700/80 hover:bg-blue-500/80 transition-colors duration-300'
+  'p-2 rounded text-gray-200 bg-blue-700/80 border border-transparent hover:bg-blue-500/80 transition-colors duration-300'
 
 export const OrangeButton =
-  'p-2 rounded text-gray-200 bg-orange-900/80 hover:bg-orange-800/90 transition-colors duration-300'
+  'p-2 rounded text-gray-200 bg-orange-900/80 border border-transparent hover:bg-orange-800/90 transition-colors duration-300'
 
 export const EndTaskButton =
-  'p-1 rounded text-gray-200 bg-orange-900/80 hover:bg-orange-800/90 transition-colors duration-300'
+  'p-1 rounded text-gray-200 bg-orange-900/80 border border-transparent hover:bg-orange-800/90 transition-colors duration-300'
 
 // Form
 export const H4ClassName = 'uppercase text-blue-400 mt-3 mb-1 font-bold'
