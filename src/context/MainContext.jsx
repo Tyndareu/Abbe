@@ -26,7 +26,7 @@ export function MainProvider({ children }) {
   const [offerTypeFilter, setOfferTypeFilter] = useState(offerType.All)
   const [salesPerson, setSalesPerson] = useState('Tod@s')
   const [unassignedDepartment, setUnassignedDepartment] = useState(false)
-  const [departmentButton, setDepartmentButton ] = useState(false)
+  const [departmentButton, setDepartmentButton] = useState(false)
 
   const [loading, setLoading] = useState(true)
 
@@ -50,14 +50,16 @@ export function MainProvider({ children }) {
     if (department === departmentList.Admin.home) {
       if (offers.length > 0) {
         if (hasUnassignedOffer(offers)) {
+          setDepartmentButton(true)
           setUnassignedDepartment(true)
+        } else {
+          setDepartmentButton(false)
         }
       }
     } else {
-      setDepartmentButton(true)
       setUnassignedDepartment(false)
     }
-  }, [offers])
+  }, [offers, department])
 
   return (
     <mainContext.Provider
@@ -98,7 +100,7 @@ export function MainProvider({ children }) {
         setLastDocument,
         unassignedDepartment,
         setUnassignedDepartment,
-        departmentButton, 
+        departmentButton
       }}
     >
       {children}
