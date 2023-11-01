@@ -29,6 +29,7 @@ import {
 // Custom hooks
 import { fetchOffers } from '../components/FetchOffers'
 import { useMainContext } from '../context/MainContext'
+import Statistics from './Statistics'
 
 function Home() {
   const [user] = useAuthState(Auth)
@@ -56,7 +57,8 @@ function Home() {
     lastDocument,
     setLastDocument,
     unassignedDepartment,
-    setUnassignedDepartment
+    setUnassignedDepartment,
+    statistics
   } = useMainContext()
 
   // Filters
@@ -160,18 +162,25 @@ function Home() {
         }}
       >
         <Nav />
-        <div className="flex flex-wrap justify-between gap-y-4 p-3">
-          <Filters clearFilters={clearFilters} />
-          <UpdateOffers
-            clearFilters={clearFilters}
-            totalOffers={offerList.length}
-          />
-        </div>
+        {!statistics && (
+          <>
+            <div className="flex flex-wrap justify-between gap-y-4 p-3">
+              <Filters clearFilters={clearFilters} />
+              <UpdateOffers
+                clearFilters={clearFilters}
+                totalOffers={offerList.length}
+              />
+            </div>
+
+            <Table offers={offerList} />
+            <span className="fixed top-14 z-10 p-2 text-xs text-blue-500">
+              {user.email}
+            </span>
+          </>
+        )}
+
+        {statistics && <Statistics />}
       </div>
-      <Table offers={offerList} />
-      <span className="fixed top-14 z-10 p-2 text-xs text-blue-500">
-        {user.email}
-      </span>
     </>
   )
 }

@@ -40,6 +40,11 @@ export function MainProvider({ children }) {
 
   const [offerManagementNav, setOfferManagementNav] = useState()
 
+  const [statistics, setStatistics] = useState(false)
+  const [gestionNav, setGestionNav] = useState(
+    departmentList.GestionNav.endOffers
+  )
+
   const hasUnassignedOffer = (offers) => {
     return offers.some((offer) => {
       const departments = Object.values(offer.department)
@@ -100,7 +105,11 @@ export function MainProvider({ children }) {
         setLastDocument,
         unassignedDepartment,
         setUnassignedDepartment,
-        departmentButton
+        departmentButton,
+        statistics,
+        setStatistics,
+        gestionNav,
+        setGestionNav
       }}
     >
       {children}

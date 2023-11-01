@@ -17,7 +17,10 @@ export default function Nav() {
     userRole,
     setShowOffer,
     offerManagementNav,
-    setOfferManagementNav
+    setOfferManagementNav,
+    setStatistics,
+    gestionNav,
+    setGestionNav
   } = useMainContext()
 
   let departments = []
@@ -43,6 +46,7 @@ export default function Nav() {
                   setOfferManagementNav(false)
                   setDepartment(item)
                   setShowOffer(false)
+                  setStatistics(false)
                 }}
               >
                 {item}
@@ -61,6 +65,8 @@ export default function Nav() {
                 setOfferManagementNav(true)
                 setDepartment(departmentList.GestionNav.endOffers)
                 setShowOffer(false)
+                setStatistics(false)
+                setGestionNav(departmentList.GestionNav.endOffers)
               }}
             >
               Finalizado
@@ -77,15 +83,21 @@ export default function Nav() {
                 <button
                   key={item}
                   className={
-                    item === department
+                    item === gestionNav
                       ? 'rounded bg-orange-900/80 p-1 text-gray-200'
                       : 'rounded p-1 transition-colors duration-300 hover:bg-orange-900 hover:text-gray-200'
                   }
                   value={item}
                   type="button"
                   onClick={() => {
-                    setDepartment(item)
+                    setGestionNav(item)
                     setShowOffer(false)
+                    if (item === departmentList.GestionNav.statistics) {
+                      setStatistics(true)
+                    } else {
+                      setStatistics(false)
+                      setDepartment(item)
+                    }
                   }}
                 >
                   {item}

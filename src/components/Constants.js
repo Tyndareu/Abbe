@@ -92,7 +92,8 @@ export const departmentList = {
   },
   GestionNav: {
     endOffers: 'Finalizadas',
-    deletedOffers: 'Eliminadas'
+    deletedOffers: 'Eliminadas',
+    statistics: 'Estadísticas'
   }
 }
 export const offerTypeDepartment = [
