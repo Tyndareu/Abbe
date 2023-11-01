@@ -1,5 +1,6 @@
 import moment from 'moment'
 export const months = {
+  '00': 'Todos',
   '01': 'Enero',
   '02': 'Febrero',
   '03': 'Marzo',
@@ -15,7 +16,7 @@ export const months = {
 }
 
 export function getUniqueMonths(offers) {
-  const months = []
+  const months = ['00']
 
   offers.forEach((offer) => {
     let month = offer.offerDate.split('/')[1]
@@ -53,7 +54,6 @@ export function compareDates(endOffers) {
     completedOnTime: 0,
     completedAfterDeadline: 0,
     completedBeforeDeadline: 0,
-    nulls: 0
   }
   for (const offer of endOffers) {
     if (offer.completedDate !== '') {
@@ -62,8 +62,7 @@ export function compareDates(endOffers) {
         : moment(offer.completedDate).isSame(offer.deliveryDate, 'day')
         ? offersInTime.completedOnTime++
         : moment(offer.deliveryDate).isAfter(offer.completedDate, 'day')
-        ? offersInTime.completedBeforeDeadline++
-        : offersInTime.nulls++
+        && offersInTime.completedBeforeDeadline++
     }
   }
   return offersInTime
@@ -103,10 +102,10 @@ export const charAtOpcions = {
       distributed: true,
       borderRadius: 5,
       borderRadiusApplication: 'end',
-      borderRadiusWhenStacked: 'last'
-    },
-    bubble: {
-      zScaling: true
+      borderRadiusWhenStacked: 'last',
+      dataLabels: {
+        position: 'top', // top, center, bottom
+      },
     },
     treemap: {
       dataLabels: {
@@ -122,12 +121,13 @@ export const charAtOpcions = {
 
   dataLabels: {
     enabled: true,
+    offsetY: -20,
     style: {
-      colors: ['#fff']
+      colors: ['#fff'],
     },
     dropShadow: {
       enabled: false
-    }
+    },
   },
   yaxis: {
     axisBorder: {
@@ -144,22 +144,33 @@ export const charAtOpcions = {
     labels: {
       show: true
     },
-    position: 'top',
+    position: 'bottom',
     axisBorder: {
-      show: false
+      show: true
     },
     axisTicks: {
-      show: false
+      show: true
     },
     categories: [
       'Total',
-      'Abiertas',
+      'Sin Finalizar',
       'Borradas ',
       'Finalizadas ',
       'Antes del plazo',
       'En plazo',
       'Fuera de plazo'
-    ]
+    ],
+    group: {
+      style: {
+        fontSize: '15px',
+        fontWeight: 700
+      },
+      groups: [
+        { title: 'Totales', cols: 1 },
+        { title: 'Control de Ofertas', cols: 3 },
+        { title: 'Control de plazos', cols: 3 }
+      ]
+    }
   },
   stroke: {
     width: 1,
