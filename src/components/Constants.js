@@ -136,8 +136,6 @@ export const initialOfferValues = {
   deliveryDate: '',
   fixedDeliveryDate: false,
   preparationDays: 0,
-  completedDate: '',
-  deletedDate: '',
   picker: pickingAssignments.unassigned,
   offerDetails: '',
   offerDetailsExtended: '',

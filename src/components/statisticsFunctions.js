@@ -32,14 +32,17 @@ export function getUniqueMonths(offers) {
 }
 
 export function openOffers(offers) {
-  return offers.filter((offer) => {
-    return offer.completedDate === ''
+  const result = offers.filter((offer) => {
+    return !offer.completedDate
+  })
+  return result.filter((offer) => {
+    return !offer.deletedDate
   }).length
 }
 
 export function completedOffers(offers) {
   return offers.filter((offer) => {
-    return offer.completedDate !== ''
+    return offer.completedDate
   }).length
 }
 
@@ -53,7 +56,7 @@ export function compareDates(endOffers) {
   const offersInTime = {
     completedOnTime: 0,
     completedAfterDeadline: 0,
-    completedBeforeDeadline: 0,
+    completedBeforeDeadline: 0
   }
   for (const offer of endOffers) {
     if (offer.completedDate !== '') {
@@ -61,8 +64,8 @@ export function compareDates(endOffers) {
         ? offersInTime.completedAfterDeadline++
         : moment(offer.completedDate).isSame(offer.deliveryDate, 'day')
         ? offersInTime.completedOnTime++
-        : moment(offer.deliveryDate).isAfter(offer.completedDate, 'day')
-        && offersInTime.completedBeforeDeadline++
+        : moment(offer.deliveryDate).isAfter(offer.completedDate, 'day') &&
+          offersInTime.completedBeforeDeadline++
     }
   }
   return offersInTime
@@ -70,10 +73,6 @@ export function compareDates(endOffers) {
 
 export const charAtOpcions = {
   chart: {
-    animations: {
-      enabled: false,
-      easing: 'swing'
-    },
     background: '#222528',
     foreColor: '#2196f3',
     height: 250,
@@ -84,15 +83,7 @@ export const charAtOpcions = {
     type: 'bar',
     width: 400
   },
-  colors: [
-    '#2196f3',
-    '#fcd53f',
-    '#d4526e',
-    '#55dfc0',
-    '#186fcb',
-    '#2c8259',
-    '#a53e51'
-  ],
+  colors: ['#2196f3', '#55dfc0', '#fcd53f', '#186fcb', '#2c8259', '#a53e51'],
   // title: {
   //   text: 'Todas las Ofertas',
   //   align: 'center'
@@ -104,8 +95,8 @@ export const charAtOpcions = {
       borderRadiusApplication: 'end',
       borderRadiusWhenStacked: 'last',
       dataLabels: {
-        position: 'top', // top, center, bottom
-      },
+        position: 'top' // top, center, bottom
+      }
     },
     treemap: {
       dataLabels: {
@@ -123,11 +114,11 @@ export const charAtOpcions = {
     enabled: true,
     offsetY: -20,
     style: {
-      colors: ['#fff'],
+      colors: ['#fff']
     },
     dropShadow: {
       enabled: false
-    },
+    }
   },
   yaxis: {
     axisBorder: {
@@ -152,11 +143,10 @@ export const charAtOpcions = {
       show: true
     },
     categories: [
-      'Total',
+      'Creadas',
+      'Finalizadas',
       'Sin Finalizar',
-      'Borradas ',
-      'Finalizadas ',
-      'Antes del plazo',
+      'Antes de plazo',
       'En plazo',
       'Fuera de plazo'
     ],
@@ -167,13 +157,13 @@ export const charAtOpcions = {
       },
       groups: [
         { title: 'Totales', cols: 1 },
-        { title: 'Control de Ofertas', cols: 3 },
+        { title: 'Control de Ofertas', cols: 2 },
         { title: 'Control de plazos', cols: 3 }
       ]
     }
   },
   stroke: {
-    width: 1,
+    width: 2,
     colors: ['#fff']
   },
   tooltip: {
@@ -184,5 +174,12 @@ export const charAtOpcions = {
   },
   legend: {
     show: false
+  },
+  grid: {
+    borderColor: '#121212',
+    padding: {
+      right: 25,
+      left: 15
+    }
   }
 }

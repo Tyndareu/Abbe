@@ -6,7 +6,6 @@ import {
   months,
   getUniqueMonths,
   openOffers,
-  deletedOffers,
   completedOffers,
   compareDates,
   charAtOpcions
@@ -44,9 +43,8 @@ export default function Statistics() {
           name: 'Ofertas',
           data: [
             filteredOffers.length,
-            openOffers(filteredOffers),
-            deletedOffers(filteredOffers),
             completedOffers(filteredOffers),
+            openOffers(filteredOffers),
             ...Object.values(compareDates(filteredOffers))
           ]
         }
@@ -74,9 +72,8 @@ export default function Statistics() {
           name: 'Ofertas',
           data: [
             filteredOffers.length,
-            openOffers(filteredOffers),
-            deletedOffers(filteredOffers),
             completedOffers(filteredOffers),
+            openOffers(filteredOffers),
             ...Object.values(compareDates(filteredOffers))
           ]
         }
@@ -93,7 +90,7 @@ export default function Statistics() {
       </h1>
 
       <div className="flex flex-wrap gap-1 ">
-        <div className="w-[48%]  min-w-[550px]">
+        <div className="w-[48%]  min-w-[650px]">
           <div className="m-3 flex flex-wrap justify-center gap-2">
             {monthsFromOffers.map((month) => (
               <button
@@ -101,7 +98,7 @@ export default function Statistics() {
                 className={`rounded p-1 px-2 transition-colors duration-300
                 ${
                   month === selectedMonthFirst
-                    ? ' bg-blue-500 hover:bg-blue-700'
+                    ? ' bg-blue-500 text-gray-200 hover:bg-blue-700'
                     : ' border border-blue-500 text-blue-500 hover:bg-blue-700 hover:text-gray-200'
                 }`}
                 key={month}
@@ -120,7 +117,7 @@ export default function Statistics() {
           </div>
         </div>
 
-        <div className="w-[48%]  min-w-[550px]">
+        <div className="w-[48%]  min-w-[650px]">
           <div className="m-3 flex flex-wrap justify-center gap-2">
             {monthsFromOffers.map((month) => (
               <button
@@ -128,7 +125,7 @@ export default function Statistics() {
                 className={`rounded p-1 px-2 transition-colors duration-300
                   ${
                     month === selectedMonthSecond
-                      ? ' bg-blue-500 hover:bg-blue-700'
+                      ? ' bg-blue-500 text-gray-200 hover:bg-blue-700'
                       : ' border border-blue-500 text-blue-500 hover:bg-blue-700 hover:text-gray-200'
                   }`}
                 key={month}
