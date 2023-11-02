@@ -2,6 +2,7 @@
 import { useState, useContext, createContext, useEffect } from 'react'
 // Components & Constants
 import { offerType, departmentList } from '../components/Constants'
+
 // Context
 const mainContext = createContext()
 
@@ -15,35 +16,36 @@ export const useMainContext = () => {
 export function MainProvider({ children }) {
   const [userRole, setUserRole] = useState('')
   const [department, setDepartment] = useState('')
-
   const [offers, setOffers] = useState([])
   const [allOffers, setAllOffers] = useState([])
   const [lastDocument, setLastDocument] = useState(null)
-
   const [searchOfferNumber, setSearchOfferNumber] = useState('')
   const [searchCustomerName, setSearchCustomerName] = useState('')
   const [picker, setPicker] = useState('Tod@s')
   const [offerTypeFilter, setOfferTypeFilter] = useState(offerType.All)
   const [salesPerson, setSalesPerson] = useState('Tod@s')
   const [unassignedDepartment, setUnassignedDepartment] = useState(false)
-  const [departmentButton, setDepartmentButton] = useState(false)
-
   const [loading, setLoading] = useState(true)
-
   const [showOffer, setShowOffer] = useState(false)
   const [selectedOffer, setSelectedOffer] = useState(null)
-
   const [lastUpdate, setLastUpdate] = useState(null)
-
   const [showEmbroiderers, setShowEmbroiderers] = useState(false)
   const [showMaterial, setShowMaterial] = useState(false)
-
   const [offerManagementNav, setOfferManagementNav] = useState()
-
   const [statistics, setStatistics] = useState(false)
   const [gestionNav, setGestionNav] = useState(
     departmentList.GestionNav.endOffers
   )
+
+  useEffect(() => {
+    if (department === departmentList.Admin.home && offers.length > 0) {
+      if (hasUnassignedOffer(offers)) {
+        setUnassignedDepartment(true)
+      } else {
+        setUnassignedDepartment(false)
+      }
+    }
+  }, [offers])
 
   const hasUnassignedOffer = (offers) => {
     return offers.some((offer) => {
@@ -51,20 +53,6 @@ export function MainProvider({ children }) {
       return departments.every((dept) => !dept)
     })
   }
-  useEffect(() => {
-    if (department === departmentList.Admin.home) {
-      if (offers.length > 0) {
-        if (hasUnassignedOffer(offers)) {
-          setDepartmentButton(true)
-          setUnassignedDepartment(true)
-        } else {
-          setDepartmentButton(false)
-        }
-      }
-    } else {
-      setUnassignedDepartment(false)
-    }
-  }, [offers, department])
 
   return (
     <mainContext.Provider
@@ -105,7 +93,6 @@ export function MainProvider({ children }) {
         setLastDocument,
         unassignedDepartment,
         setUnassignedDepartment,
-        departmentButton,
         statistics,
         setStatistics,
         gestionNav,

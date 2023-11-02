@@ -23,7 +23,6 @@ export function getRole(user) {
   else if (userRoles.user.includes(user)) return usersRolesList.user
   else return usersRolesList.guest
 }
-
 export const filteredOffers = ({
   offers,
   searchCustomerName,
@@ -34,63 +33,52 @@ export const filteredOffers = ({
   unassignedDepartment
 }) => {
   return offers.filter((offer) => {
-    if (
-      searchCustomerName &&
-      !offer.client.toLowerCase().includes(searchCustomerName.toLowerCase())
-    ) {
-      return false
-    }
+    const customerNameMatch =
+      !searchCustomerName ||
+      offer.client.toLowerCase().includes(searchCustomerName.toLowerCase())
 
-    if (
-      searchOfferNumber &&
-      !offer.offerNumber.toLowerCase().includes(searchOfferNumber.toLowerCase())
-    ) {
-      return false
-    }
+    const offerNumberMatch =
+      !searchOfferNumber ||
+      offer.offerNumber.toLowerCase().includes(searchOfferNumber.toLowerCase())
 
-    if (picker !== 'Tod@s' && offer.picker !== picker) {
-      return false
-    }
+    const pickerMatch = picker === 'Tod@s' || offer.picker === picker
 
-    if (offerTypeFilter !== 'Todas' && offer.offerType !== offerTypeFilter) {
-      return false
-    }
-    if (salesPerson !== 'Tod@s' && offer.salesPerson !== salesPerson) {
-      return false
-    }
-    if (unassignedDepartment) {
-      const departments = Object.values(offer.department)
-      const allFalse = departments.every((dept) => !dept)
-      if (!allFalse) return false
-    }
-    return true
+    const offerTypeMatch =
+      offerTypeFilter === 'Todas' || offer.offerType === offerTypeFilter
+
+    const salesPersonMatch =
+      salesPerson === 'Tod@s' || offer.salesPerson === salesPerson
+
+    const departmentMatch =
+      !unassignedDepartment ||
+      Object.values(offer.department).every((dept) => !dept)
+
+    return (
+      customerNameMatch &&
+      offerNumberMatch &&
+      pickerMatch &&
+      offerTypeMatch &&
+      salesPersonMatch &&
+      departmentMatch
+    )
   })
 }
 
-export const getDateEndColor = (days) => {
-  if (days < 2) {
-    return dateEndColor.twoDays.color
-  }
-  if (days < 7) {
-    return dateEndColor.oneWeek.color
-  }
-  if (days < 14) {
-    return dateEndColor.twoWeeks.color
-  }
-  return dateEndColor.moreThanTwoWeeks.color
-}
+export const getDateEndColor = (days) =>
+  days < 2
+    ? dateEndColor.twoDays.color
+    : days < 7
+    ? dateEndColor.oneWeek.color
+    : days < 14
+    ? dateEndColor.twoWeeks.color
+    : dateEndColor.moreThanTwoWeeks.color
 
-export const getCompletedDateColor = (isBefore) => {
-  if (isBefore === 'before') {
-    return completedDateColor.before
-  }
-  if (isBefore === 'same') {
-    return completedDateColor.same
-  }
-  if (isBefore === 'after') {
-    return completedDateColor.after
-  }
-}
+export const getCompletedDateColor = (isBefore) =>
+  isBefore === 'before'
+    ? completedDateColor.before
+    : isBefore === 'same'
+    ? completedDateColor.same
+    : isBefore === 'after' && completedDateColor.after
 
 const departmentsEmails = {
   picaje: ['abbepicaje@gmail.com'],
@@ -101,24 +89,32 @@ const departmentsEmails = {
   warehouse: ['abbealmacen@gmail.com']
 }
 
-export function getDepartamentFromUser(user) {
-  for (const department in departmentsEmails) {
-    if (departmentsEmails[department].includes(user)) {
-      return departmentList.Admin[department]
-    }
-  }
+export function getDepartmentFromUser(user) {
+  const departmentEntry = Object.entries(departmentsEmails).find(
+    ([department, emails]) => emails.includes(user)
+  )
 
+  if (departmentEntry) {
+    const [department] = departmentEntry
+    return departmentList.Admin[department]
+  }
   return departmentList.Admin.home
 }
 
-
-export function isInitialState({searchOfferNumber,searchCustomerName, picker, offerTypeFilter, salesPerson, unassignedDepartment}) {
+export function isInitialState({
+  searchOfferNumber,
+  searchCustomerName,
+  picker,
+  offerTypeFilter,
+  salesPerson,
+  unassignedDepartment
+}) {
   return (
     searchOfferNumber === '' &&
     searchCustomerName === '' &&
     picker === 'Tod@s' &&
     offerTypeFilter === offerType.All &&
     salesPerson === 'Tod@s' &&
-    unassignedDepartment === false
-  );
+    !unassignedDepartment
+  )
 }

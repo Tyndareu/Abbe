@@ -163,24 +163,25 @@ function Home() {
       >
         <Nav />
         {!statistics && (
-          <>
-            <div className="flex flex-wrap justify-between gap-y-4 p-3">
-              <Filters clearFilters={clearFilters} />
-              <UpdateOffers
-                clearFilters={clearFilters}
-                totalOffers={offerList.length}
-              />
-            </div>
-
-            <Table offers={offerList} />
-            <span className="fixed top-14 z-10 p-2 text-xs text-blue-500">
-              {user.email}
-            </span>
-          </>
+          <div className="flex flex-wrap justify-between gap-y-4 p-3">
+            <Filters clearFilters={clearFilters} />
+            <UpdateOffers
+              clearFilters={clearFilters}
+              totalOffers={offerList.length}
+            />
+          </div>
         )}
-
-        {statistics && <Statistics />}
       </div>
+      {!statistics && (
+        <>
+          <Table offers={offerList} />
+          <span className="fixed top-14 z-10 p-2 text-xs text-blue-500">
+            {user.email}
+          </span>
+        </>
+      )}
+
+      {statistics && <Statistics />}
     </>
   )
 }

@@ -24,13 +24,10 @@ import DepartamentsRow from './DepartamentsRow'
 export default function Table({ offers }) {
   const {
     department,
-    departmentButton,
     selectedOffer,
     setSelectedOffer,
     setShowOffer,
-    setUnassignedDepartment,
-    showOffer,
-    unassignedDepartment
+    showOffer
   } = useMainContext()
 
   function OfferTypeColor(offerType) {
@@ -50,9 +47,7 @@ export default function Table({ offers }) {
     setSelectedOffer(offer)
     setShowOffer(true)
   }
-  const handleOnClickUnassignedDepartment = (offer) => {
-    setUnassignedDepartment(!unassignedDepartment)
-  }
+
   if (showOffer) {
     return <Form offer={selectedOffer} />
   } else {
@@ -95,22 +90,7 @@ export default function Table({ offers }) {
                     <th className="p-1">Fecha de Creación</th>
                     {/* <th className="p-1">Días P.</th> */}
                     <th className="p-1">Comercial</th>
-                    <th className="p-1">
-                      {departmentButton ? (
-                        <button
-                          onClick={handleOnClickUnassignedDepartment}
-                          className={
-                            'rounded  bg-red-900/80 p-1 text-gray-300 transition-all  duration-300 hover:bg-red-700'
-                          }
-                        >
-                          {unassignedDepartment
-                            ? 'Sin Departamento'
-                            : 'Departamento/s'}
-                        </button>
-                      ) : (
-                        'Departamento/s'
-                      )}
-                    </th>
+                    <th className="p-1">Departamento/s</th>
                   </>
                 )}
                 {(department === departmentList.GestionNav.endOffers ||
