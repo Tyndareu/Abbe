@@ -1,4 +1,6 @@
 import moment from 'moment'
+import { offerType } from './Constants'
+
 export const months = {
   '00': 'Todos',
   '01': 'Enero',
@@ -16,62 +18,95 @@ export const months = {
 }
 
 export function getUniqueMonths(offers) {
-  const months = ['00']
+  const uniqueMonths = new Set(['00']) // Utiliza un conjunto para garantizar meses únicos
 
   offers.forEach((offer) => {
-    let month = offer.offerDate.split('/')[1]
-    if (month.length === 1) {
-      month = '0' + month
+    const month = offer.offerDate.split('/')[1]
+    uniqueMonths.add(month)
+  })
+
+  return [...uniqueMonths].sort((a, b) => a - b) // Convierte el conjunto en un array y ordénalo
+}
+
+export const filterOffers = async (selectedMonth, offers, monthsFromOffers) => {
+  if (selectedMonth === monthsFromOffers[0]) return offers
+  return offers.filter(
+    (offer) => offer.deliveryDate.split('-')[1] === selectedMonth
+  )
+}
+
+export const calculateAverageDays = (totalDays, totalOffers) => {
+  return totalDays > 0 ? Math.round(totalDays / totalOffers) : 0
+}
+
+export function getDataFromOffers(offers) {
+  const dataToCompare = {
+    totalOffers: 0,
+    completedOffers: 0,
+    openOffers: 0,
+    beforeDeliveryDate: 0,
+    onDeliveryDate: 0,
+    afterDeliveryDate: 0
+  }
+
+  const dataDays = {
+    totalDays: 0,
+    totalOffers: 0,
+    exteriorTotalDays: 0,
+    exteriorTotalOffers: 0,
+    stockTotalDays: 0,
+    stockTotalOffers: 0,
+    emborideryTotalDays: 0,
+    emborideryTotalOffers: 0
+  }
+
+  offers.forEach((offer) => {
+    if (offer.deletedDate) {
+      return // Saltar ofertas eliminadas
     }
-    if (!months.includes(month)) {
-      months.push(month)
+
+    dataToCompare.totalOffers++
+
+    if (offer.completedDate) {
+      const createdDate = offer.offerDate.split('/').reverse().join('-')
+      const days = moment(offer.completedDate).diff(moment(createdDate), 'days')
+
+      if (days) {
+        dataDays.totalDays += days
+        dataDays.totalOffers++
+      }
+
+      dataToCompare.completedOffers++
+
+      if (moment(offer.deliveryDate).isBefore(offer.completedDate, 'day')) {
+        dataToCompare.afterDeliveryDate++
+      } else if (
+        moment(offer.deliveryDate).isSame(offer.completedDate, 'day')
+      ) {
+        dataToCompare.onDeliveryDate++
+      } else {
+        dataToCompare.beforeDeliveryDate++
+      }
+
+      if (offer.offerType === offerType.Exterior) {
+        dataDays.exteriorTotalDays += days
+        dataDays.exteriorTotalOffers++
+      } else if (offer.offerType === offerType.Stock) {
+        dataDays.stockTotalDays += days
+        dataDays.stockTotalOffers++
+      } else if (offer.offerType === offerType.Embroidery) {
+        dataDays.emborideryTotalDays += days
+        dataDays.emborideryTotalOffers++
+      }
+    } else {
+      dataToCompare.openOffers++
     }
   })
 
-  return months.sort((a, b) => a - b)
+  return { dataToCompare, dataDays }
 }
 
-export function openOffers(offers) {
-  const result = offers.filter((offer) => {
-    return !offer.completedDate
-  })
-  return result.filter((offer) => {
-    return !offer.deletedDate
-  }).length
-}
-
-export function completedOffers(offers) {
-  return offers.filter((offer) => {
-    return offer.completedDate
-  }).length
-}
-
-export function deletedOffers(offers) {
-  return offers.filter((offer) => {
-    return offer.deletedDate
-  }).length
-}
-
-export function compareDates(endOffers) {
-  const offersInTime = {
-    completedOnTime: 0,
-    completedAfterDeadline: 0,
-    completedBeforeDeadline: 0
-  }
-  for (const offer of endOffers) {
-    if (offer.completedDate !== '') {
-      moment(offer.deliveryDate).isBefore(offer.completedDate, 'day')
-        ? offersInTime.completedAfterDeadline++
-        : moment(offer.completedDate).isSame(offer.deliveryDate, 'day')
-        ? offersInTime.completedOnTime++
-        : moment(offer.deliveryDate).isAfter(offer.completedDate, 'day') &&
-          offersInTime.completedBeforeDeadline++
-    }
-  }
-  return offersInTime
-}
-
-export const charAtOpcions = {
+export const charAtOffers = {
   chart: {
     background: '#222528',
     foreColor: '#2196f3',
@@ -143,7 +178,7 @@ export const charAtOpcions = {
       show: true
     },
     categories: [
-      'Creadas',
+      'Finalizan',
       'Finalizadas',
       'Sin Finalizar',
       'Antes de plazo',
@@ -156,9 +191,110 @@ export const charAtOpcions = {
         fontWeight: 700
       },
       groups: [
-        { title: 'Totales', cols: 1 },
+        { title: 'Entrega', cols: 1 },
         { title: 'Control de Ofertas', cols: 2 },
-        { title: 'Control de plazos', cols: 3 }
+        { title: 'Finalizadas: Control de plazos ', cols: 3 }
+      ]
+    }
+  },
+  stroke: {
+    width: 2,
+    colors: ['#fff']
+  },
+  tooltip: {
+    theme: 'dark',
+    x: {
+      show: true
+    }
+  },
+  legend: {
+    show: false
+  },
+  grid: {
+    borderColor: '#121212',
+    padding: {
+      right: 25,
+      left: 15
+    }
+  }
+}
+
+export const charAtDays = {
+  chart: {
+    background: '#222528',
+    foreColor: '#2196f3',
+    height: 250,
+    id: 'JjcCT26',
+    toolbar: {
+      show: false
+    },
+    type: 'bar',
+    width: 400
+  },
+  colors: ['#2196f3', '#bdb034', '#2174b7', '#bc750b'],
+  plotOptions: {
+    bar: {
+      distributed: true,
+      borderRadius: 5,
+      borderRadiusApplication: 'end',
+      borderRadiusWhenStacked: 'last',
+      dataLabels: {
+        position: 'top' // top, center, bottom
+      }
+    },
+    treemap: {
+      dataLabels: {
+        format: 'scale'
+      }
+    },
+    radialBar: {
+      hollow: {
+        background: '#fff'
+      }
+    }
+  },
+
+  dataLabels: {
+    enabled: true,
+    offsetY: -20,
+    style: {
+      colors: ['#fff']
+    },
+    dropShadow: {
+      enabled: false
+    }
+  },
+  yaxis: {
+    axisBorder: {
+      show: false
+    },
+    axisTicks: {
+      show: false
+    },
+    labels: {
+      show: true
+    }
+  },
+  xaxis: {
+    labels: {
+      show: true
+    },
+    position: 'bottom',
+    axisBorder: {
+      show: true
+    },
+    axisTicks: {
+      show: true
+    },
+    categories: ['Todas', 'Exterior', 'Bordado', 'Stock'],
+    group: {
+      style: {
+        fontSize: '15px',
+        fontWeight: 700
+      },
+      groups: [
+        { title: 'Totales', cols: 1 },
+        { title: 'Tipo de Ofertas', cols: 3 }
       ]
     }
   },

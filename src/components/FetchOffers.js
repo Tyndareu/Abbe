@@ -1,7 +1,7 @@
 import { departmentList, limitItems } from './Constants'
 import { klona } from 'klona/json'
 import { getOffers, COLLECTION_NAME } from '../firebase/Api'
-import { db } from '../firebase/Config'
+import { db } from '../firebase/config'
 import moment from 'moment'
 // Firebase
 import {
@@ -40,13 +40,13 @@ const departmentQueries = {
   ),
   [departmentList.GestionNav.endOffers]: query(
     collection(db, COLLECTION_NAME),
-    where('completedDate', '!=', ''),
+    where('completedDate', '!=', null),
     orderBy('completedDate', 'desc'),
     limit(limitItems)
   ),
   [departmentList.GestionNav.deletedOffers]: query(
     collection(db, COLLECTION_NAME),
-    where('deletedDate', '!=', ''),
+    where('deletedDate', '!=', null),
     orderBy('deletedDate', 'desc'),
     limit(limitItems)
   ),
