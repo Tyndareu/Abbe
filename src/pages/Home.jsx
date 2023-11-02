@@ -23,7 +23,7 @@ import {
 import {
   getRole,
   filteredOffers,
-  getDepartamentFromUser
+  getDepartmentFromUser
 } from '../components/Functions'
 
 // Custom hooks
@@ -105,7 +105,7 @@ function Home() {
         if (userRole === usersRolesList.user) {
           setDepartment(departmentList.User.preparation)
         } else {
-          setDepartment(getDepartamentFromUser(user.email))
+          setDepartment(getDepartmentFromUser(user.email))
         }
       }
     }
