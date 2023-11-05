@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
 import Chart from 'react-apexcharts'
-import backup from '../json/backup.json'
+import backup from '../../json/backup.json'
 import {
-  months,
-  getUniqueMonths,
-  charAtOffers,
+  calculateAverageDays,
   charAtDays,
-  getDataFromOffers,
+  charAtOffers,
   filterOffers,
-  calculateAverageDays
-} from '../components/statisticsFunctions'
+  getDataFromOffers,
+  getUniqueMonths,
+  months,
+  totalCreates
+} from './functions'
 
 export default function Statistics() {
   const offers = Object.values(backup.__collections__.offers)
@@ -34,42 +35,40 @@ export default function Statistics() {
       offers,
       monthsFromOffers
     )
+    const nonDeletedOffers = offers.filter((offer) => !offer.deletedDate)
+
+    const totalOffersCreated = totalCreates({
+      nonDeletedOffers,
+      selectedMonth
+    })
+
     const { dataToCompare, dataDays } = getDataFromOffers(filteredOffers)
 
-    setSeries([
-      {
-        name: 'Ofertas',
-        data: [
-          dataToCompare.totalOffers,
-          dataToCompare.completedOffers,
-          dataToCompare.openOffers,
-          dataToCompare.beforeDeliveryDate,
-          dataToCompare.onDeliveryDate,
-          dataToCompare.afterDeliveryDate
-        ]
-      }
-    ])
+    const offerSeriesData = [
+      totalOffersCreated,
+      dataToCompare.totalOffers,
+      dataToCompare.completedOffers,
+      dataToCompare.openOffers,
+      dataToCompare.beforeDeliveryDate,
+      dataToCompare.onDeliveryDate,
+      dataToCompare.afterDeliveryDate
+    ]
 
-    setSeriesDays([
-      {
-        name: 'Days',
-        data: [
-          calculateAverageDays(dataDays.totalDays, dataDays.totalOffers),
-          calculateAverageDays(
-            dataDays.exteriorTotalDays,
-            dataDays.exteriorTotalOffers
-          ),
-          calculateAverageDays(
-            dataDays.emborideryTotalDays,
-            dataDays.emborideryTotalOffers
-          ),
-          calculateAverageDays(
-            dataDays.stockTotalDays,
-            dataDays.stockTotalOffers
-          )
-        ]
-      }
-    ])
+    const daysSeriesData = [
+      calculateAverageDays(dataDays.totalDays, dataDays.totalOffers),
+      calculateAverageDays(
+        dataDays.exteriorTotalDays,
+        dataDays.exteriorTotalOffers
+      ),
+      calculateAverageDays(
+        dataDays.emborideryTotalDays,
+        dataDays.emborideryTotalOffers
+      ),
+      calculateAverageDays(dataDays.stockTotalDays, dataDays.stockTotalOffers)
+    ]
+
+    setSeries([{ name: 'Ofertas', data: offerSeriesData }])
+    setSeriesDays([{ name: 'Days', data: daysSeriesData }])
   }
 
   useEffect(() => {

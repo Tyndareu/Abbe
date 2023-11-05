@@ -29,7 +29,7 @@ import {
 // Custom hooks
 import { fetchOffers } from '../components/FetchOffers'
 import { useMainContext } from '../context/MainContext'
-import Statistics from './Statistics'
+import Statistics from './statistics/Statistics'
 
 function Home() {
   const [user] = useAuthState(Auth)

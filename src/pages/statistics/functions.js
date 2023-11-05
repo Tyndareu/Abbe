@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { offerType } from './Constants'
+import { offerType } from '../../components/Constants'
 
 export const months = {
   '00': 'Todos',
@@ -37,6 +37,14 @@ export const filterOffers = async (selectedMonth, offers, monthsFromOffers) => {
 
 export const calculateAverageDays = (totalDays, totalOffers) => {
   return totalDays > 0 ? Math.round(totalDays / totalOffers) : 0
+}
+
+export const totalCreates = ({ nonDeletedOffers, selectedMonth }) => {
+  return selectedMonth === '00'
+    ? nonDeletedOffers.length
+    : nonDeletedOffers.filter(
+        (offer) => offer.offerDate.split('/')[1] === selectedMonth
+      ).length
 }
 
 export function getDataFromOffers(offers) {
@@ -118,7 +126,15 @@ export const charAtOffers = {
     type: 'bar',
     width: 400
   },
-  colors: ['#2196f3', '#55dfc0', '#fcd53f', '#186fcb', '#2c8259', '#a53e51'],
+  colors: [
+    '#61f42a',
+    '#2196f3',
+    '#55dfc0',
+    '#fcd53f',
+    '#186fcb',
+    '#2c8259',
+    '#a53e51'
+  ],
   // title: {
   //   text: 'Todas las Ofertas',
   //   align: 'center'
@@ -178,6 +194,7 @@ export const charAtOffers = {
       show: true
     },
     categories: [
+      'Creadas',
       'Finalizan',
       'Finalizadas',
       'Sin Finalizar',
@@ -191,7 +208,7 @@ export const charAtOffers = {
         fontWeight: 700
       },
       groups: [
-        { title: 'Entrega', cols: 1 },
+        { title: 'Totales', cols: 2 },
         { title: 'Control de Ofertas', cols: 2 },
         { title: 'Finalizadas: Control de plazos ', cols: 3 }
       ]
