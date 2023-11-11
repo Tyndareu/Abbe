@@ -12,14 +12,15 @@ import {
 // Constants
 import {
   departmentList,
+  embroiderers,
   offerTypeColor,
   offerTypeDepartment,
-  pickingAssignments,
-  embroiderers
+  pickingAssignments
 } from '../../components/Constants'
 import Form from '../form/Form'
 import EndTask from './EndTask'
 import DepartamentsRow from './DepartamentsRow'
+import NewOffer from './newOffer'
 
 export default function Table({ offers }) {
   const {
@@ -122,12 +123,19 @@ export default function Table({ offers }) {
                 >
                   <td
                     onClick={() => handleOnClick(offer)}
-                    className={`p-1 text-center `}
+                    className={'p-1 text-center'}
                   >
                     {offer.offerNumber}
                   </td>
-                  <td onClick={() => handleOnClick(offer)} className="p-1">
+
+                  <td
+                    onClick={() => handleOnClick(offer)}
+                    className="relative p-1"
+                  >
                     {offer.client}
+                    {department === departmentList.Admin.home && (
+                      <NewOffer offer={offer} />
+                    )}
                   </td>
                   {department !== departmentList.GestionNav.endOffers &&
                     department !== departmentList.GestionNav.deletedOffers && (
