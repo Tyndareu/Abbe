@@ -1,20 +1,11 @@
 import newOfferPNG from '../../img/newOffer.png'
-import moment from 'moment'
 
 export default function NewOffer({ offer }) {
-  if (!offer.offerDate) {
+  if (!offer.newDate) {
     return null
   }
 
-  const formattedOfferDate = moment(offer.offerDate, 'DD/MM/YYYY').format(
-    'YYYY-MM-DD'
-  )
-  const today = moment().format('YYYY-MM-DD')
-  const daysDifference = moment(today).diff(formattedOfferDate, 'days')
-
-  if (daysDifference > 2) {
-    return null
-  }
+  if (!offer.newDate) return null
 
   return (
     <img

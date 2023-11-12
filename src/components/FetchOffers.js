@@ -75,17 +75,27 @@ export const fetchOffers = async ({
       const data = doc.data()
 
       let preparationDate = data.deliveryDate
+      let newDate = false
 
       if (data.preparationDays && data.preparationDays !== 0) {
         preparationDate = moment(data.deliveryDate)
           .subtract(data.preparationDays, 'days')
           .format('YYYY-MM-DD')
       }
+      if (department === departmentList.Admin.home) {
+        const formattedOfferDate = moment(data.offerDate, 'DD/MM/YYYY').format(
+          'YYYY-MM-DD'
+        )
+        const today = moment().format('YYYY-MM-DD')
+        const daysDifference = moment(today).diff(formattedOfferDate, 'days')
+        daysDifference > 2 ? (newDate = false) : (newDate = true)
+      }
 
       docs.push({
         ...data,
         id: doc.id,
-        preparationDate
+        preparationDate,
+        newDate
       })
     })
 

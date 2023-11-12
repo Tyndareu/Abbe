@@ -33,6 +33,7 @@ export function MainProvider({ children }) {
   const [showMaterial, setShowMaterial] = useState(false)
   const [offerManagementNav, setOfferManagementNav] = useState()
   const [statistics, setStatistics] = useState(false)
+  const [newOffer, setNewOffer] = useState(false)
   const [gestionNav, setGestionNav] = useState(
     departmentList.GestionNav.endOffers
   )
@@ -96,7 +97,9 @@ export function MainProvider({ children }) {
         statistics,
         setStatistics,
         gestionNav,
-        setGestionNav
+        setGestionNav,
+        newOffer,
+        setNewOffer
       }}
     >
       {children}

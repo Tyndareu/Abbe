@@ -30,28 +30,27 @@ export const filteredOffers = ({
   picker,
   offerTypeFilter,
   salesPerson,
-  unassignedDepartment
+  unassignedDepartment,
+  newOffer
 }) => {
   return offers.filter((offer) => {
+    console.log(newOffer)
+
     const customerNameMatch =
       !searchCustomerName ||
       offer.client.toLowerCase().includes(searchCustomerName.toLowerCase())
-
     const offerNumberMatch =
       !searchOfferNumber ||
       offer.offerNumber.toLowerCase().includes(searchOfferNumber.toLowerCase())
-
     const pickerMatch = picker === 'Tod@s' || offer.picker === picker
-
     const offerTypeMatch =
       offerTypeFilter === 'Todas' || offer.offerType === offerTypeFilter
-
     const salesPersonMatch =
       salesPerson === 'Tod@s' || offer.salesPerson === salesPerson
-
     const departmentMatch =
       !unassignedDepartment ||
       Object.values(offer.department).every((dept) => !dept)
+    const newDateMatch = newOffer ? offer.newDate === true : true
 
     return (
       customerNameMatch &&
@@ -59,7 +58,8 @@ export const filteredOffers = ({
       pickerMatch &&
       offerTypeMatch &&
       salesPersonMatch &&
-      departmentMatch
+      departmentMatch &&
+      newDateMatch
     )
   })
 }
@@ -107,7 +107,8 @@ export function isInitialState({
   picker,
   offerTypeFilter,
   salesPerson,
-  unassignedDepartment
+  unassignedDepartment,
+  newOffer
 }) {
   return (
     searchOfferNumber === '' &&
@@ -115,6 +116,7 @@ export function isInitialState({
     picker === 'Tod@s' &&
     offerTypeFilter === offerType.All &&
     salesPerson === 'Tod@s' &&
-    !unassignedDepartment
+    !unassignedDepartment &&
+    !newOffer
   )
 }

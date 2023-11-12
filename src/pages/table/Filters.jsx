@@ -8,7 +8,8 @@ import {
 import { useMainContext } from '../../context/MainContext'
 import { isInitialState } from '../../components/Functions'
 import Dropdown from '../../components/Dropdown'
-import { RedButton, GreyButton } from '../../components/ClassColors'
+import { RedButton, GreyButton, BlueButton } from '../../components/ClassColors'
+import newOfferPNG from '../../img/newOffer.png'
 
 export default function Filters({ clearFilters }) {
   const {
@@ -24,7 +25,9 @@ export default function Filters({ clearFilters }) {
     setSearchCustomerName,
     setSearchOfferNumber,
     showOffer,
-    unassignedDepartment
+    unassignedDepartment,
+    newOffer,
+    setNewOffer
   } = useMainContext()
   const offerTypes = Object.values(offerType)
   const pickers = Object.values(pickingAssignments)
@@ -35,7 +38,8 @@ export default function Filters({ clearFilters }) {
     picker,
     offerTypeFilter,
     salesPerson,
-    unassignedDepartment
+    unassignedDepartment,
+    newOffer
   })
   if (!showOffer) {
     return (
@@ -65,6 +69,15 @@ export default function Filters({ clearFilters }) {
             />
           </div>
         </form>
+
+        {department === departmentList.Admin.home && (
+          <img
+            onClick={() => setNewOffer(!newOffer)}
+            src={newOfferPNG}
+            alt="Nuevas ofertas"
+            className={`h-10 cursor-pointer ${newOffer ? null : 'grayscale'}`}
+          />
+        )}
 
         {department === departmentList.Admin.picaje && (
           <div>

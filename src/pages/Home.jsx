@@ -58,7 +58,9 @@ function Home() {
     setLastDocument,
     unassignedDepartment,
     setUnassignedDepartment,
-    statistics
+    statistics,
+    newOffer,
+    setNewOffer
   } = useMainContext()
 
   // Filters
@@ -69,12 +71,14 @@ function Home() {
     setOfferTypeFilter(offerType.All)
     setSalesPerson('Tod@s')
     setUnassignedDepartment(false)
+    setNewOffer(false)
   }, [
     searchOfferNumber,
     searchCustomerName,
     picker,
     offerTypeFilter,
-    salesPerson
+    salesPerson,
+    newOffer
   ])
 
   const offerList = useMemo(() => {
@@ -85,7 +89,8 @@ function Home() {
       picker,
       offerTypeFilter,
       salesPerson,
-      unassignedDepartment
+      unassignedDepartment,
+      newOffer
     })
   }, [
     offers,
@@ -94,7 +99,8 @@ function Home() {
     picker,
     offerTypeFilter,
     salesPerson,
-    unassignedDepartment
+    unassignedDepartment,
+    newOffer
   ])
   // Filters End
 
