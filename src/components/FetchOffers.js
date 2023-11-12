@@ -1,8 +1,8 @@
 import { departmentList, limitItems } from './Constants'
 import { klona } from 'klona/json'
 import { getOffers, COLLECTION_NAME } from '../firebase/Api'
-import { db } from '../firebase/config'
 import moment from 'moment'
+import { db } from '../firebase/Config'
 // Firebase
 import {
   collection,
