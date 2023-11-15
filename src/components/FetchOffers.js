@@ -88,7 +88,7 @@ export const fetchOffers = async ({
         )
         const today = moment().format('YYYY-MM-DD')
         const daysDifference = moment(today).diff(formattedOfferDate, 'days')
-        daysDifference > 2 ? (newDate = false) : (newDate = true)
+        daysDifference > 1 ? (newDate = false) : (newDate = true)
       }
 
       docs.push({
