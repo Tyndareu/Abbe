@@ -6,8 +6,8 @@ export default function completedDate({ offer }) {
     moment(offer.deliveryDate).isBefore(offer.completedDate, 'day')
       ? 'before'
       : moment(offer.completedDate).isSame(offer.deliveryDate, 'day')
-      ? 'same'
-      : 'after'
+        ? 'same'
+        : 'after'
   )
   return (
     <div className={`rounded p-1 text-center ${color}`}>

@@ -1,14 +1,14 @@
-import { SearchIcon } from '../../components/Icons'
+import { GreyButton, RedButton } from '../../components/ClassColors'
 import {
   departmentList,
-  pickingAssignments,
   offerType,
+  pickingAssignments,
   salesPeopleList
 } from '../../components/Constants'
-import { useMainContext } from '../../context/MainContext'
-import { isInitialState } from '../../components/Functions'
 import Dropdown from '../../components/Dropdown'
-import { RedButton, GreyButton, BlueButton } from '../../components/ClassColors'
+import { isInitialState } from '../../components/Functions'
+import { SearchIcon } from '../../components/Icons'
+import { useMainContext } from '../../context/MainContext'
 import newOfferPNG from '../../img/newOffer.png'
 
 export default function Filters({ clearFilters }) {

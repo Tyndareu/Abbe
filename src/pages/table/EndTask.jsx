@@ -122,12 +122,12 @@ export default function EndTask({ offer }) {
               department === departmentList.Admin.warehouse
                 ? '¿Confirma que quiere finalizar la Oferta?'
                 : department === departmentList.Admin.picaje
-                ? '¿Confirma que quiere enviar la Oferta a Preparación?'
-                : department === departmentList.Admin.stamping
-                ? '¿Confirma que quiere enviar la Oferta a Preparación?'
-                : department === departmentList.Admin.embroideries
-                ? '¿Confirma que quiere enviar la Oferta a Confección?'
-                : '¿Confirma que quiere enviar la Oferta a Almacén?'
+                  ? '¿Confirma que quiere enviar la Oferta a Preparación?'
+                  : department === departmentList.Admin.stamping
+                    ? '¿Confirma que quiere enviar la Oferta a Preparación?'
+                    : department === departmentList.Admin.embroideries
+                      ? '¿Confirma que quiere enviar la Oferta a Confección?'
+                      : '¿Confirma que quiere enviar la Oferta a Almacén?'
             }
             title="¿Terminar tarea?"
           />
