@@ -25,7 +25,7 @@ export function MainProvider({ children }) {
   const [offerTypeFilter, setOfferTypeFilter] = useState(offerType.All)
   const [salesPerson, setSalesPerson] = useState('Tod@s')
   const [unassignedDepartment, setUnassignedDepartment] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true)
   const [showOffer, setShowOffer] = useState(false)
   const [selectedOffer, setSelectedOffer] = useState(null)
   const [lastUpdate, setLastUpdate] = useState(null)
@@ -76,7 +76,7 @@ export function MainProvider({ children }) {
         setOfferTypeFilter,
         salesPerson,
         setSalesPerson,
-        loading,
+        isLoading,
         setLoading,
         showOffer,
         setShowOffer,
