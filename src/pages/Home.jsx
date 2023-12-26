@@ -133,7 +133,11 @@ function Home() {
   }, [department])
 
   if (loading) {
-    return <></>
+    return (
+      <div className="flex h-screen items-center justify-center text-3xl text-blue-500">
+        <Loading />
+      </div>
+    )
   }
 
   if (user === null) {
