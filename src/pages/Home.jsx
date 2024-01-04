@@ -33,7 +33,7 @@ import { useMainContext } from '../context/MainContext'
 import Statistics from './statistics/Statistics'
 
 function Home() {
-  const [user] = useAuthState(Auth)
+  const [user, loading] = useAuthState(Auth)
   const {
     offers,
     department,
@@ -52,7 +52,7 @@ function Home() {
     setOfferTypeFilter,
     salesPerson,
     setSalesPerson,
-    loading,
+    isLoading,
     setLoading,
     setLastUpdate,
     lastDocument,
@@ -134,13 +134,21 @@ function Home() {
     }
   }, [department])
 
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center text-3xl text-blue-500">
+        <Loading />
+      </div>
+    )
+  }
+
   if (user === null) {
     return <Welcome />
   } else if (userRole === usersRolesList.guest) {
     return <UnauthorizedUser />
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <span className="fixed top-14 z-10 p-2 text-xs text-blue-500">
