@@ -7,7 +7,7 @@ export function calculateTimePerEmbroidery({ stitches, speed, seconds, cuts }) {
 export function calculateTotalTime(inputs) {
   const totalTimeInSeconds =
     (inputs.stitches / inputs.speed) * 60 + inputs.seconds * inputs.cuts
-  const totalTimeWithItems = totalTimeInSeconds * inputs.items
+  const totalTimeWithItems = totalTimeInSeconds * inputs.garments
   const formattedTime = formatTime(totalTimeWithItems)
   return formattedTime
 }
@@ -47,6 +47,6 @@ export function calculateTotalPrice(inputs) {
   return (
     (inputs.price / 3600) *
     ((inputs.stitches / inputs.speed) * 60 + inputs.seconds * inputs.cuts) *
-    inputs.items
+    inputs.garments
   ).toFixed(2)
 }

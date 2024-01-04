@@ -18,53 +18,54 @@ export default function Stitches() {
   const formElements = [
     {
       label: 'Precio por Hora:',
-      name: 'Precio',
+      name: 'price',
       value: inputs.price,
       type: 'number'
     },
     {
       label: 'Puntadas:',
-      name: 'puntadas',
+      name: 'stitches',
       value: inputs.stitches,
       type: 'number'
     },
     {
       label: 'Velocidad (PPM):',
-      name: 'velocidad',
+      name: 'speed',
       value: inputs.speed,
       type: 'number'
     },
     { label: 'Cuts:', name: 'cuts', value: inputs.cuts, type: 'number' },
     {
       label: 'Segundos por corte:',
-      name: 'segundos',
+      name: 'seconds',
       value: inputs.seconds,
       type: 'number'
     },
     {
       label: 'Número de prendas:',
-      name: 'prendas',
+      name: 'garments',
       value: inputs.garments,
       type: 'number'
     }
   ]
   const formClient = [
-    { label: 'Client:', name: 'client', value: inputs.client, type: 'text' },
+    { label: 'Cliente:', name: 'cliente', value: inputs.client, type: 'text' },
     {
-      label: 'Embroidery:',
-      name: 'embroidery',
+      label: 'Bordado:',
+      name: 'bordado',
       value: inputs.embroidery,
       type: 'text'
     },
     {
-      label: 'Hoop:',
-      name: 'hoop',
+      label: 'Bastidor:',
+      name: 'bastidor',
       value: inputs.hoop,
       type: 'text'
     }
   ]
 
   const handleInputChange = (e) => {
+    console.log(e.target.value)
     const { name, value } = e.target
     if (e.target.name === 'speed') {
       if (e.target.value < 1) {
@@ -85,12 +86,12 @@ export default function Stitches() {
           handleInputChange={handleInputChange}
         />
         <StitchesResources inputs={inputs} />
-        <EmbroideryPricingtable
-          inputs={inputs}
-          formCliente={formClient}
-          handleInputChange={handleInputChange}
-        />
       </div>
+      <EmbroideryPricingtable
+        inputs={inputs}
+        formCliente={formClient}
+        handleInputChange={handleInputChange}
+      />
     </>
   )
 }
