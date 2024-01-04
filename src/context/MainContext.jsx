@@ -37,6 +37,7 @@ export function MainProvider({ children }) {
   const [gestionNav, setGestionNav] = useState(
     departmentList.GestionNav.endOffers
   )
+  const [stitches, setStitches] = useState(false)
 
   useEffect(() => {
     if (department === departmentList.Admin.home && offers.length > 0) {
@@ -99,7 +100,9 @@ export function MainProvider({ children }) {
         gestionNav,
         setGestionNav,
         newOffer,
-        setNewOffer
+        setNewOffer,
+        stitches,
+        setStitches
       }}
     >
       {children}

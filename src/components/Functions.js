@@ -34,8 +34,6 @@ export const filteredOffers = ({
   newOffer
 }) => {
   return offers.filter((offer) => {
-    console.log(newOffer)
-
     const customerNameMatch =
       !searchCustomerName ||
       offer.client.toLowerCase().includes(searchCustomerName.toLowerCase())

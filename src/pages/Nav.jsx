@@ -1,11 +1,18 @@
 // Context
 import { useMainContext } from '../context/MainContext'
 // Constants
-import { departmentList, usersRolesList } from '../components/Constants'
+import {
+  departmentList,
+  ghostUsers,
+  usersRolesList
+} from '../components/Constants'
 // Assets
 import Logo from '../img/logo.png'
 // Components
 import { SingOutButton } from '../components/AuthButtons'
+// Firebase
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { Auth } from '../firebase/api'
 
 const buttonClassSelect = 'border-b-4 border-blue-500 text-gray-200'
 const buttonClassHover =
@@ -20,8 +27,10 @@ export default function Nav() {
     setOfferManagementNav,
     setStatistics,
     gestionNav,
-    setGestionNav
+    setGestionNav,
+    setStitches
   } = useMainContext()
+  const [user] = useAuthState(Auth)
 
   let departments = []
   if (userRole && userRole !== usersRolesList.guest) {
@@ -47,6 +56,7 @@ export default function Nav() {
                   setDepartment(item)
                   setShowOffer(false)
                   setStatistics(false)
+                  setStitches(false)
                 }}
               >
                 {item}
@@ -54,23 +64,45 @@ export default function Nav() {
             )
           })}
           {userRole === usersRolesList.admin && (
-            <button
-              className={
-                department === departmentList.GestionNav.endOffers ||
-                department === departmentList.GestionNav.deletedOffers
-                  ? `${buttonClassSelect}  mx-4`
-                  : `${buttonClassHover} mx-4`
-              }
-              onClick={() => {
-                setOfferManagementNav(true)
-                setDepartment(departmentList.GestionNav.endOffers)
-                setShowOffer(false)
-                setStatistics(false)
-                setGestionNav(departmentList.GestionNav.endOffers)
-              }}
-            >
-              Finalizado
-            </button>
+            <>
+              {' '}
+              <button
+                className={
+                  department === departmentList.GestionNav.endOffers ||
+                  department === departmentList.GestionNav.deletedOffers
+                    ? `${buttonClassSelect}  mx-4`
+                    : `${buttonClassHover} mx-4`
+                }
+                onClick={() => {
+                  setOfferManagementNav(true)
+                  setDepartment(departmentList.GestionNav.endOffers)
+                  setShowOffer(false)
+                  setStatistics(false)
+                  setStitches(false)
+                  setGestionNav(departmentList.GestionNav.endOffers)
+                }}
+              >
+                Finalizado
+              </button>
+              {ghostUsers.includes(user.email) && (
+                <button
+                  onClick={() => {
+                    setOfferManagementNav(false)
+                    setShowOffer(false)
+                    setStatistics(false)
+                    setDepartment('stitches')
+                    setStitches(true)
+                  }}
+                  className={
+                    department === 'stitches'
+                      ? `${buttonClassSelect}  mx-4`
+                      : `${buttonClassHover} mx-4`
+                  }
+                >
+                  Puntadas
+                </button>
+              )}
+            </>
           )}
         </div>
         <SingOutButton />

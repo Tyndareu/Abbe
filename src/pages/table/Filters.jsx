@@ -8,7 +8,7 @@ import {
 import { useMainContext } from '../../context/MainContext'
 import { isInitialState } from '../../components/Functions'
 import Dropdown from '../../components/Dropdown'
-import { RedButton, GreyButton, BlueButton } from '../../components/ClassColors'
+import { RedButton, GreyButton } from '../../components/ClassColors'
 import newOfferPNG from '../../img/newOffer.png'
 
 export default function Filters({ clearFilters }) {

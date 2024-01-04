@@ -12,6 +12,7 @@ import Table from './table/Table'
 import UnauthorizedUser from './UnauthorizedUser'
 import Filters from './table/Filters'
 import UpdateOffers from '../components/UpdateOffers'
+import Stitches from './stitches/Stitches'
 // import Footer from './Footer'
 // Constants
 import {
@@ -60,7 +61,8 @@ function Home() {
     setUnassignedDepartment,
     statistics,
     newOffer,
-    setNewOffer
+    setNewOffer,
+    stitches
   } = useMainContext()
 
   // Filters
@@ -168,7 +170,7 @@ function Home() {
         }}
       >
         <Nav />
-        {!statistics && (
+        {!statistics && !stitches && (
           <div className="flex flex-wrap justify-between gap-y-4 p-3">
             <Filters clearFilters={clearFilters} />
             <UpdateOffers
@@ -178,7 +180,7 @@ function Home() {
           </div>
         )}
       </div>
-      {!statistics && (
+      {!statistics && !stitches && (
         <>
           <Table offers={offerList} />
           <span className="fixed top-14 z-10 p-2 text-xs text-blue-500">
@@ -186,7 +188,7 @@ function Home() {
           </span>
         </>
       )}
-
+      {stitches && <Stitches />}
       {statistics && <Statistics />}
     </>
   )
