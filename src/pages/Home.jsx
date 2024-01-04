@@ -121,7 +121,11 @@ function Home() {
 
   useEffect(() => {
     clearFilters()
-    if (user !== null) {
+    if (
+      user !== null &&
+      department !== 'stitches' &&
+      department !== departmentList.GestionNav.statistics
+    ) {
       fetchOffers({
         department,
         setOffers,

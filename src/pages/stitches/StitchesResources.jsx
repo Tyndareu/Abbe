@@ -28,10 +28,10 @@ export function StitchesResources({ inputs }) {
         <p>Tiempo Total {inputs.garments} Prenda/s:</p>
         <p>{calculateTotalTime(inputs)}</p>
       </div>
-      <div className={listStyle}>
-        <p>Precio Total {inputs.garments} Prenda/s:</p>
+      {/* <div className={listStyle}>
+        <p>Precio Total {inputs.garments} Prenda/s (Sin dto):</p>
         <p>{calculateTotalPrice(inputs)}€</p>
-      </div>
+      </div> */}
     </div>
   )
 }
@@ -101,9 +101,13 @@ export const EmbroideryPricingtable = ({
         </table>
       </div>
       <div className="m-auto flex max-w-[700px] justify-center gap-10 rounded-md border border-blue-500 p-5 text-blue-500">
-        <div>{inputs.cliente}</div>
-        <div>Bordado: {inputs.bordado}</div>
-        <div>Bastidor: {inputs.bastidor}</div>
+        <p className="text-gray-200">{inputs.cliente}</p>
+        <p>
+          Bordado: <span className="text-gray-200">{inputs.bordado}</span>
+        </p>
+        <p>
+          Bastidor: <span className="text-gray-200">{inputs.bastidor}</span>
+        </p>
       </div>
     </>
   )

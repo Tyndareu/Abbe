@@ -34,7 +34,7 @@ export default function Stitches() {
       value: inputs.speed,
       type: 'number'
     },
-    { label: 'Cuts:', name: 'cuts', value: inputs.cuts, type: 'number' },
+    { label: 'Cortes:', name: 'cuts', value: inputs.cuts, type: 'number' },
     {
       label: 'Segundos por corte:',
       name: 'seconds',
