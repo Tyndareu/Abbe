@@ -84,7 +84,7 @@ export default function Filters({ clearFilters }) {
           <p
             className={
               newOffer
-                ? 'h-10 cursor-pointer rounded border border-blue-500 p-2 text-blue-500'
+                ? 'h-10 cursor-pointer rounded border border-blue-500 bg-blue-500 p-2 text-gray-200'
                 : 'h-10 cursor-pointer rounded border border-gray-500 p-2 text-gray-500'
             }
             onClick={() => setNewOffer(!newOffer)}

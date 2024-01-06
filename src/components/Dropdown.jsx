@@ -52,11 +52,11 @@ export default function Dropdown({ buttonName, items, dropDownFunction }) {
         </svg>
       </button>
       {isDropdownOpen && (
-        <div className="absolute top-full z-10 mt-1 w-32 rounded bg-gray-700">
-          <ul className="py-2 text-sm text-gray-100">
+        <div className="absolute top-full z-10 mt-1 w-32 rounded border-2 bg-blue-700">
+          <ul className="py-2 text-sm text-white">
             {items.map((item) => (
               <li
-                className="block cursor-pointer p-2 hover:bg-gray-500 hover:text-white"
+                className="block cursor-pointer p-2 hover:bg-blue-900 hover:font-bold"
                 key={item}
                 value={item}
                 onClick={() => handleOnClick(item)}

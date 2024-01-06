@@ -84,12 +84,12 @@ function Dropdown({ offer, options, field }) {
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 w-32 rounded bg-gray-800">
-          <ul className="py-2 text-sm font-normal text-gray-300">
+        <div className="absolute z-10 w-32 rounded border bg-red-500">
+          <ul className="py-2 text-sm font-normal text-white">
             {options.map((item) => (
               <li
                 key={item}
-                className="block cursor-pointer p-2 transition-colors duration-300 hover:bg-gray-500 hover:text-white"
+                className="block cursor-pointer p-2 transition-all duration-200 hover:bg-red-900 hover:font-bold"
                 onClick={() => handleChange(item)}
               >
                 {item}

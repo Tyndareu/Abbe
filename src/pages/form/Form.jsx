@@ -155,7 +155,7 @@ export default function Form() {
                     values.client === '' ||
                     values.offerNumber === '' ||
                     values.deliveryDate === ''
-                      ? 'rounded bg-gray-700 p-2'
+                      ? 'rounded border border-gray-700 p-2 text-gray-700'
                       : BlueButton
                   }
                   disabled={
@@ -237,7 +237,7 @@ export default function Form() {
                       values.client === '' ||
                       values.offerNumber === '' ||
                       values.deliveryDate === ''
-                        ? 'rounded bg-gray-700 p-2'
+                        ? 'rounded border border-gray-700 p-2 text-gray-700'
                         : BlueButton
                     }
                     disabled={
