@@ -84,7 +84,7 @@ function Dropdown({ offer, options, field }) {
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 w-32 rounded border bg-red-500">
+        <div className="absolute z-10 w-32 rounded border bg-red-700">
           <ul className="py-2 text-sm font-normal text-white">
             {options.map((item) => (
               <li
