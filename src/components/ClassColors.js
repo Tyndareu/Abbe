@@ -1,11 +1,14 @@
 export const RedButton =
-  'p-2 rounded text-gray-200 bg-red-700/50 border border-transparent hover:bg-red-500/80 transition-colors duration-300'
+  'flex gap-1 group relative overflow-hidden rounded-md border border-b-4 border-red-400 p-2 font-medium text-red-400 outline-none hover:border-b hover:border-t-4 active:opacity-75'
+export const RedButtonSpan =
+  'absolute -top-[150%] left-0 inline-flex h-[5px] w-80 rounded-md bg-red-400 opacity-50 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)] shadow-red-400 duration-500 group-hover:top-[150%]'
 export const GreyButton =
-  'p-2 rounded text-gray-600 bg-transparent border border-gray-800 transition-colors duration-300'
+  'flex gap-1 group relative overflow-hidden rounded-md border border-b-4 border-gray-800 p-2 font-medium text-gray-700 outline-none'
 
 export const BlueButton =
-  'p-2 rounded text-gray-200 bg-blue-700/80 border border-transparent hover:bg-blue-500/80 transition-colors duration-300'
-
+  'group relative flex gap-1 overflow-hidden rounded-md border border-b-4 border-blue-400 p-2 font-medium text-blue-400 outline-none hover:border-b hover:border-t-4 active:opacity-75'
+export const BlueButtonSpan =
+  'absolute -top-[150%] left-0 inline-flex h-[5px] w-80 rounded-md bg-blue-400 opacity-50 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)] shadow-blue-400 duration-500 group-hover:top-[150%]'
 export const OrangeButton =
   'p-2 rounded text-gray-200 bg-orange-900/80 border border-transparent hover:bg-orange-800/90 transition-colors duration-300'
 

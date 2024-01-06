@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { RedButton } from '../../components/ClassColors'
+import { RedButton, RedButtonSpan } from '../../components/ClassColors'
 
 export default function LastUpdate({ lastUpdate }) {
   const [showUpdates, setShowUpdates] = useState(false)
@@ -10,6 +10,7 @@ export default function LastUpdate({ lastUpdate }) {
           onClick={() => setShowUpdates(!showUpdates)}
           className={RedButton}
         >
+          <span className={RedButtonSpan}></span>
           {showUpdates ? 'Ocultar Cambios' : 'Mostrar Cambios'}
         </button>
         {showUpdates && (

@@ -1,8 +1,14 @@
+/* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
 // Context
 import { useMainContext } from '../context/MainContext'
 // Components
 import { ClockHistoryIcon, TaksIcon, UpdateIcon } from '../components/Icons'
-import { BlueButton, RedButton } from './ClassColors'
+import {
+  BlueButton,
+  BlueButtonSpan,
+  RedButton,
+  RedButtonSpan
+} from './ClassColors'
 // Utils
 import moment from 'moment'
 // Custom Hooks
@@ -40,7 +46,6 @@ export default function UpdateOffers({ totalOffers }) {
         {department !== departmentList.GestionNav.deletedOffers &&
         department !== departmentList.GestionNav.endOffers ? (
           <button
-            className={`flex gap-1 ${BlueButton}`}
             onClick={() => {
               fetchOffers({
                 department,
@@ -51,7 +56,9 @@ export default function UpdateOffers({ totalOffers }) {
                 setLastDocument
               })
             }}
+            className={BlueButton}
           >
+            <span className={BlueButtonSpan}></span>
             <UpdateIcon />
             Actualizar
           </button>
@@ -72,6 +79,7 @@ export default function UpdateOffers({ totalOffers }) {
             }}
           >
             <UpdateIcon />
+            <span className={BlueButtonSpan}></span>
             {lastDocument ? 'Cargar más Ofertas' : 'No hay más Ofertas'}
           </button>
         )}
@@ -79,12 +87,13 @@ export default function UpdateOffers({ totalOffers }) {
           department !== departmentList.GestionNav.endOffers &&
           department !== departmentList.GestionNav.deletedOffers && (
             <button
-              className={RedButton}
               onClick={() => {
                 setShowOffer(true)
                 setSelectedOffer(null)
               }}
+              className={RedButton}
             >
+              <span className={RedButtonSpan}></span>
               Nueva Oferta
             </button>
           )}

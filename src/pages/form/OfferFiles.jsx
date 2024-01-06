@@ -10,6 +10,7 @@ import { storage } from '../../firebase/Api'
 import {
   H4ClassName,
   BlueButton,
+  BlueButtonSpan,
   OrangeButton
 } from '../../components/ClassColors'
 // Context
@@ -104,7 +105,7 @@ export default function OfferFiles({ values }) {
       </div>
 
       {userRole === usersRolesList.admin && selectedOffer && (
-        <div className="mt-5">
+        <div className="mt-5 flex items-center gap-5">
           <input
             className="rounded-md"
             ref={fileInputRef}
@@ -112,10 +113,13 @@ export default function OfferFiles({ values }) {
             onChange={handleFileChange}
             type="file"
           />
-
-          <button className={BlueButton} onClick={handleUpload}>
-            Subir archivos
-          </button>
+          <span className={BlueButtonSpan}></span>
+          {files.length > 0 && (
+            <button className={BlueButton} onClick={handleUpload}>
+              <span className={BlueButtonSpan}></span>
+              Subir archivos
+            </button>
+          )}
         </div>
       )}
 

@@ -1,4 +1,4 @@
-import newOfferPNG from '../../img/newOffer.png'
+// import newOfferPNG from '../../img/newOffer.png'
 
 export default function NewOffer({ offer }) {
   if (!offer.newDate) {
@@ -8,10 +8,11 @@ export default function NewOffer({ offer }) {
   if (!offer.newDate) return null
 
   return (
-    <img
-      src={newOfferPNG}
-      alt="New Offer"
-      className="absolute right-2 top-0 w-8"
-    />
+    // <img
+    //   src={newOfferPNG}
+    //   alt="New Offer"
+    //   className="absolute right-2 top-0 w-8"
+    // />
+    <p className="absolute right-2 top-1 w-8 font-extrabold">New</p>
   )
 }

@@ -1,4 +1,8 @@
-import { GreyButton, RedButton } from '../../components/ClassColors'
+import {
+  GreyButton,
+  RedButton,
+  RedButtonSpan
+} from '../../components/ClassColors'
 import {
   departmentList,
   offerType,
@@ -9,7 +13,7 @@ import Dropdown from '../../components/Dropdown'
 import { isInitialState } from '../../components/Functions'
 import { SearchIcon } from '../../components/Icons'
 import { useMainContext } from '../../context/MainContext'
-import newOfferPNG from '../../img/newOffer.png'
+// import newOfferPNG from '../../img/newOffer.png'
 
 export default function Filters({ clearFilters }) {
   const {
@@ -71,12 +75,22 @@ export default function Filters({ clearFilters }) {
         </form>
 
         {department === departmentList.Admin.home && (
-          <img
+          // <img
+          //   onClick={() => setNewOffer(!newOffer)}
+          //   src={newOfferPNG}
+          //   alt="Nuevas ofertas"
+          //   className={`h-10 cursor-pointer ${newOffer ? null : 'grayscale'}`}
+          // />
+          <p
+            className={
+              newOffer
+                ? 'h-10 cursor-pointer rounded border border-blue-500 p-2 text-blue-500'
+                : 'h-10 cursor-pointer rounded border border-gray-500 p-2 text-gray-500'
+            }
             onClick={() => setNewOffer(!newOffer)}
-            src={newOfferPNG}
-            alt="Nuevas ofertas"
-            className={`h-10 cursor-pointer ${newOffer ? null : 'grayscale'}`}
-          />
+          >
+            Nuevas
+          </p>
         )}
 
         {department === departmentList.Admin.picaje && (
@@ -153,6 +167,7 @@ export default function Filters({ clearFilters }) {
           className={!clearFiltersButtonEnable ? RedButton : GreyButton}
           disabled={clearFiltersButtonEnable}
         >
+          {!clearFiltersButtonEnable && <span className={RedButtonSpan}></span>}
           Borrar filtros
         </button>
       </div>

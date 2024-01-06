@@ -6,6 +6,8 @@ import { useMainContext } from '../../context/MainContext'
 import {
   RedButton,
   BlueButton,
+  RedButtonSpan,
+  BlueButtonSpan,
   H4ClassName
 } from '../../components/ClassColors'
 import DeliveryDate from './DeliveryDate'
@@ -149,14 +151,21 @@ export default function Form() {
               departmentList.GestionNav.deletedOffers !== department &&
               departmentList.GestionNav.endOffers !== department && (
                 <button
-                  className={BlueButton}
-                  onClick={handleSubmit}
+                  className={
+                    values.client === '' ||
+                    values.offerNumber === '' ||
+                    values.deliveryDate === ''
+                      ? 'rounded bg-gray-700 p-2'
+                      : BlueButton
+                  }
                   disabled={
                     values.client === '' ||
                     values.offerNumber === '' ||
                     values.deliveryDate === ''
                   }
+                  onClick={handleSubmit}
                 >
+                  <span className={BlueButtonSpan}></span>
                   {selectedOffer ? 'Actualizar Oferta' : 'Crear Oferta'}
                 </button>
               )}
@@ -164,6 +173,7 @@ export default function Form() {
               className={`flex gap-1 ${RedButton}`}
               onClick={() => setShowOffer(false)}
             >
+              <span className={RedButtonSpan}></span>
               <IconArrowBackUp />
               Volver
             </button>
@@ -237,6 +247,7 @@ export default function Form() {
                     }
                     onClick={handleSubmit}
                   >
+                    <span className={BlueButtonSpan}></span>
                     {selectedOffer ? 'Actualizar Oferta' : 'Crear Oferta'}
                   </button>
                 </>
@@ -247,6 +258,7 @@ export default function Form() {
           className={`flex gap-1 ${RedButton}`}
           onClick={() => setShowOffer(false)}
         >
+          <span className={RedButtonSpan}></span>
           <IconArrowBackUp />
           Volver
         </button>
