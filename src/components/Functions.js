@@ -66,17 +66,17 @@ export const getDateEndColor = (days) =>
   days < 2
     ? dateEndColor.twoDays.color
     : days < 7
-    ? dateEndColor.oneWeek.color
-    : days < 14
-    ? dateEndColor.twoWeeks.color
-    : dateEndColor.moreThanTwoWeeks.color
+      ? dateEndColor.oneWeek.color
+      : days < 14
+        ? dateEndColor.twoWeeks.color
+        : dateEndColor.moreThanTwoWeeks.color
 
 export const getCompletedDateColor = (isBefore) =>
   isBefore === 'before'
     ? completedDateColor.before
     : isBefore === 'same'
-    ? completedDateColor.same
-    : isBefore === 'after' && completedDateColor.after
+      ? completedDateColor.same
+      : isBefore === 'after' && completedDateColor.after
 
 const departmentsEmails = {
   picaje: ['abbepicaje@gmail.com'],
