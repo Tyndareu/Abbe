@@ -131,7 +131,7 @@ export async function updateSeriesData({
   setSeries,
   setSeriesDays
 }) {
-  if (!monthlyOffers || !offersByYears || !selectedMonth) {
+  if (!monthlyOffers || !offersByYears || !selectedMonth || !selectedYear) {
     return
   }
   const filteredOffers =

@@ -34,6 +34,7 @@ export default function Statistics() {
   }, [])
 
   useEffect(() => {
+    if (!offersByYears) return
     setSelectedMonthFirst(monthsFromYears && monthsFromYears[0])
     setSelectedMonthSecond(
       monthsFromYears && monthsFromYears[monthsFromYears.length - 1]
@@ -50,15 +51,6 @@ export default function Statistics() {
     setSelectedMonthSecond(
       monthsFromYears && monthsFromYears[monthsFromYears.length - 1]
     )
-
-    updateSeriesData({
-      selectedMonth: selectedMonthFirst,
-      setSeries: setSeriesFirst,
-      setSeriesDays: setSeriesDaysFirst,
-      monthlyOffers: offersByYears[year],
-      offersByYears,
-      selectedYear: year
-    })
   }
 
   useEffect(() => {
