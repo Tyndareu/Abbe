@@ -52,6 +52,11 @@ export const calculateAverageDays = (totalDays, totalOffers) => {
   return totalDays > 0 ? Math.round(totalDays / totalOffers) : 0
 }
 
+export function newMonthsFromYears(offersByYear) {
+  if (offersByYear)
+    return Object.keys(filterOffersByMonth(offersByYear)).sort((a, b) => a - b)
+}
+
 export function getDataFromOffers(offers) {
   const dataToCompare = {
     totalOffers: 0,
@@ -69,8 +74,8 @@ export function getDataFromOffers(offers) {
     exteriorTotalOffers: 0,
     stockTotalDays: 0,
     stockTotalOffers: 0,
-    emborideryTotalDays: 0,
-    emborideryTotalOffers: 0
+    embroideryTotalDays: 0,
+    embroideryTotalOffers: 0
   }
 
   offers.forEach((offer) => {
@@ -108,8 +113,8 @@ export function getDataFromOffers(offers) {
         dataDays.stockTotalDays += days
         dataDays.stockTotalOffers++
       } else if (offer.offerType === offerType.Embroidery) {
-        dataDays.emborideryTotalDays += days
-        dataDays.emborideryTotalOffers++
+        dataDays.embroideryTotalDays += days
+        dataDays.embroideryTotalOffers++
       }
     } else {
       dataToCompare.openOffers++
@@ -119,15 +124,14 @@ export function getDataFromOffers(offers) {
   return { dataToCompare, dataDays }
 }
 export async function updateSeriesData({
-  selectedMonth,
-  setSeries,
-  setSeriesDays,
   monthlyOffers,
-  monthsFromYears,
   offersByYears,
-  selectedYear
+  selectedMonth,
+  selectedYear,
+  setSeries,
+  setSeriesDays
 }) {
-  if (!monthsFromYears) {
+  if (!monthlyOffers || !offersByYears || !selectedMonth) {
     return
   }
   const filteredOffers =
@@ -156,8 +160,8 @@ export async function updateSeriesData({
       dataDays.exteriorTotalOffers
     ),
     calculateAverageDays(
-      dataDays.emborideryTotalDays,
-      dataDays.emborideryTotalOffers
+      dataDays.embroideryTotalDays,
+      dataDays.embroideryTotalOffers
     ),
     calculateAverageDays(dataDays.stockTotalDays, dataDays.stockTotalOffers)
   ]

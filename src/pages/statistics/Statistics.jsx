@@ -7,6 +7,7 @@ import {
   filterByYear,
   filterOffersByMonth,
   months,
+  newMonthsFromYears,
   updateSeriesData
 } from './functions'
 
@@ -15,12 +16,6 @@ export default function Statistics() {
   const [offersByYears, setOffersByYears] = useState({})
   const [monthlyOffers, setMonthlyOffers] = useState({})
   const [selectedYear, setSelectedYear] = useState('2023')
-
-  const monthsFromYears =
-    offersByYears[selectedYear] &&
-    Object.keys(filterOffersByMonth(offersByYears[selectedYear])).sort(
-      (a, b) => a - b
-    )
 
   const [selectedMonthFirst, setSelectedMonthFirst] = useState()
   const [selectedMonthSecond, setSelectedMonthSecond] = useState()
@@ -31,31 +26,40 @@ export default function Statistics() {
   const [seriesDaysFirst, setSeriesDaysFirst] = useState([])
   const [seriesDaysSecond, setSeriesDaysSecond] = useState([])
 
-  useEffect(() => {
-    setSelectedMonthFirst(monthsFromYears && monthsFromYears[0])
-    setSelectedMonthSecond(
-      monthsFromYears && monthsFromYears[monthsFromYears.length - 1]
-    )
-
-    offersByYears[selectedYear] &&
-      setMonthlyOffers(filterOffersByMonth(offersByYears[selectedYear]))
-  }, [offersByYears])
+  let monthsFromYears =
+    offersByYears && newMonthsFromYears(offersByYears[selectedYear])
 
   useEffect(() => {
     setOffersByYears(filterByYear(offers))
   }, [])
 
-  //  useEffect(() => {
-  //    updateSeriesData({
-  //      selectedMonth: selectedMonthFirst,
-  //      setSeries: setSeriesFirst,
-  //      setSeriesDays: setSeriesDaysFirst,
-  //      monthlyOffers,
-  //      monthsFromYears,
-  //      offersByYears,
-  //      selectedYear
-  //    })
-  //  }, [selectedYear])
+  useEffect(() => {
+    setSelectedMonthFirst(monthsFromYears && monthsFromYears[0])
+    setSelectedMonthSecond(
+      monthsFromYears && monthsFromYears[monthsFromYears.length - 1]
+    )
+    offersByYears[selectedYear] &&
+      setMonthlyOffers(filterOffersByMonth(offersByYears[selectedYear]))
+  }, [offersByYears])
+
+  const selectYear = async (year) => {
+    setSelectedYear(year)
+    setMonthlyOffers(filterOffersByMonth(offersByYears[year]))
+    monthsFromYears = newMonthsFromYears(offersByYears[year])
+    setSelectedMonthFirst(monthsFromYears && monthsFromYears[0])
+    setSelectedMonthSecond(
+      monthsFromYears && monthsFromYears[monthsFromYears.length - 1]
+    )
+
+    updateSeriesData({
+      selectedMonth: selectedMonthFirst,
+      setSeries: setSeriesFirst,
+      setSeriesDays: setSeriesDaysFirst,
+      monthlyOffers: offersByYears[year],
+      offersByYears,
+      selectedYear: year
+    })
+  }
 
   useEffect(() => {
     updateSeriesData({
@@ -63,7 +67,6 @@ export default function Statistics() {
       setSeries: setSeriesFirst,
       setSeriesDays: setSeriesDaysFirst,
       monthlyOffers,
-      monthsFromYears,
       offersByYears,
       selectedYear
     })
@@ -75,7 +78,6 @@ export default function Statistics() {
       setSeries: setSeriesSecond,
       setSeriesDays: setSeriesDaysSecond,
       monthlyOffers,
-      monthsFromYears,
       offersByYears,
       selectedYear
     })
@@ -86,11 +88,11 @@ export default function Statistics() {
       <h1 className="text-center text-3xl font-bold text-blue-500">
         Estadísticas
       </h1>
-      <div className="flex flex-wrap justify-center gap-1 mb-4 mt-3">
+      <div className="mb-4 mt-3 flex flex-wrap justify-center gap-1">
         {offersByYears &&
           Object.keys(offersByYears).map((year) => (
             <button
-              onClick={() => setSelectedYear(year)}
+              onClick={() => selectYear(year)}
               key={year}
               className={`rounded p-1 px-2 transition-colors duration-300
                   ${
