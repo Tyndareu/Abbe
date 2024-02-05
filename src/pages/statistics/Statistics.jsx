@@ -1,27 +1,24 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
 import backup from '../../json/backup.json'
 import {
-  calculateAverageDays,
   charAtDays,
   charAtOffers,
-  filterOffers,
-  getDataFromOffers,
-  getUniqueMonths,
+  filterByYear,
+  filterOffersByMonth,
   months,
-  totalCreates
+  newMonthsFromYears,
+  updateSeriesData
 } from './functions'
 
 export default function Statistics() {
   const offers = Object.values(backup.__collections__.offers)
-  const monthsFromOffers = getUniqueMonths(offers)
+  const [offersByYears, setOffersByYears] = useState({})
+  const [monthlyOffers, setMonthlyOffers] = useState({})
+  const [selectedYear, setSelectedYear] = useState('2023')
 
-  const [selectedMonthFirst, setSelectedMonthFirst] = useState(
-    monthsFromOffers[0]
-  )
-  const [selectedMonthSecond, setSelectedMonthSecond] = useState(
-    monthsFromOffers[monthsFromOffers.length - 1]
-  )
+  const [selectedMonthFirst, setSelectedMonthFirst] = useState()
+  const [selectedMonthSecond, setSelectedMonthSecond] = useState()
 
   const [seriesFirst, setSeriesFirst] = useState([])
   const [seriesSecond, setSeriesSecond] = useState([])
@@ -29,54 +26,53 @@ export default function Statistics() {
   const [seriesDaysFirst, setSeriesDaysFirst] = useState([])
   const [seriesDaysSecond, setSeriesDaysSecond] = useState([])
 
-  const updateSeriesData = async (selectedMonth, setSeries, setSeriesDays) => {
-    const filteredOffers = await filterOffers(
-      selectedMonth,
-      offers,
-      monthsFromOffers
+  let monthsFromYears =
+    offersByYears && newMonthsFromYears(offersByYears[selectedYear])
+
+  useEffect(() => {
+    setOffersByYears(filterByYear(offers))
+  }, [])
+
+  useEffect(() => {
+    if (!offersByYears) return
+    setSelectedMonthFirst(monthsFromYears && monthsFromYears[0])
+    setSelectedMonthSecond(
+      monthsFromYears && monthsFromYears[monthsFromYears.length - 1]
     )
-    const nonDeletedOffers = offers.filter((offer) => !offer.deletedDate)
+    offersByYears[selectedYear] &&
+      setMonthlyOffers(filterOffersByMonth(offersByYears[selectedYear]))
+  }, [offersByYears])
 
-    const totalOffersCreated = totalCreates({
-      nonDeletedOffers,
-      selectedMonth
-    })
-
-    const { dataToCompare, dataDays } = getDataFromOffers(filteredOffers)
-
-    const offerSeriesData = [
-      totalOffersCreated,
-      dataToCompare.totalOffers,
-      dataToCompare.completedOffers,
-      dataToCompare.openOffers,
-      dataToCompare.beforeDeliveryDate,
-      dataToCompare.onDeliveryDate,
-      dataToCompare.afterDeliveryDate
-    ]
-
-    const daysSeriesData = [
-      calculateAverageDays(dataDays.totalDays, dataDays.totalOffers),
-      calculateAverageDays(
-        dataDays.exteriorTotalDays,
-        dataDays.exteriorTotalOffers
-      ),
-      calculateAverageDays(
-        dataDays.emborideryTotalDays,
-        dataDays.emborideryTotalOffers
-      ),
-      calculateAverageDays(dataDays.stockTotalDays, dataDays.stockTotalOffers)
-    ]
-
-    setSeries([{ name: 'Ofertas', data: offerSeriesData }])
-    setSeriesDays([{ name: 'Days', data: daysSeriesData }])
+  const selectYear = async (year) => {
+    setSelectedYear(year)
+    setMonthlyOffers(filterOffersByMonth(offersByYears[year]))
+    monthsFromYears = newMonthsFromYears(offersByYears[year])
+    setSelectedMonthFirst(monthsFromYears && monthsFromYears[0])
+    setSelectedMonthSecond(
+      monthsFromYears && monthsFromYears[monthsFromYears.length - 1]
+    )
   }
 
   useEffect(() => {
-    updateSeriesData(selectedMonthFirst, setSeriesFirst, setSeriesDaysFirst)
+    updateSeriesData({
+      selectedMonth: selectedMonthFirst,
+      setSeries: setSeriesFirst,
+      setSeriesDays: setSeriesDaysFirst,
+      monthlyOffers,
+      offersByYears,
+      selectedYear
+    })
   }, [selectedMonthFirst])
 
   useEffect(() => {
-    updateSeriesData(selectedMonthSecond, setSeriesSecond, setSeriesDaysSecond)
+    updateSeriesData({
+      selectedMonth: selectedMonthSecond,
+      setSeries: setSeriesSecond,
+      setSeriesDays: setSeriesDaysSecond,
+      monthlyOffers,
+      offersByYears,
+      selectedYear
+    })
   }, [selectedMonthSecond])
 
   return (
@@ -84,6 +80,24 @@ export default function Statistics() {
       <h1 className="text-center text-3xl font-bold text-blue-500">
         Estadísticas
       </h1>
+      <div className="mb-4 mt-3 flex flex-wrap justify-center gap-1">
+        {offersByYears &&
+          Object.keys(offersByYears).map((year) => (
+            <button
+              onClick={() => selectYear(year)}
+              key={year}
+              className={`rounded p-1 px-2 transition-colors duration-300
+                  ${
+                    year === selectedYear
+                      ? 'bg-blue-500 text-gray-200 hover:bg-blue-700'
+                      : 'border border-blue-500 text-blue-500 hover:bg-blue-700 hover:text-gray-200'
+                  }`}
+            >
+              {year}
+            </button>
+          ))}
+      </div>
+
       <div className="flex flex-wrap justify-center gap-1">
         {[selectedMonthFirst, selectedMonthSecond].map(
           (selectedMonth, index) => (
@@ -92,24 +106,25 @@ export default function Statistics() {
               className="w-[48%] min-w-[650px] rounded-xl border border-blue-500 p-1"
             >
               <div className="m-3 flex flex-wrap justify-center gap-2">
-                {monthsFromOffers.map((month) => (
-                  <button
-                    onClick={() =>
-                      index === 0
-                        ? setSelectedMonthFirst(month)
-                        : setSelectedMonthSecond(month)
-                    }
-                    className={`rounded p-1 px-2 transition-colors duration-300
+                {monthsFromYears &&
+                  monthsFromYears.map((month) => (
+                    <button
+                      onClick={() =>
+                        index === 0
+                          ? setSelectedMonthFirst(month)
+                          : setSelectedMonthSecond(month)
+                      }
+                      className={`rounded p-1 px-2 transition-colors duration-300
                   ${
                     month === selectedMonth
                       ? 'bg-blue-500 text-gray-200 hover:bg-blue-700'
                       : 'border border-blue-500 text-blue-500 hover:bg-blue-700 hover:text-gray-200'
                   }`}
-                    key={month}
-                  >
-                    {months[month]}
-                  </button>
-                ))}
+                      key={month}
+                    >
+                      {months[month]}
+                    </button>
+                  ))}
               </div>
               <h2 className="text-center text-blue-500">
                 Rendimiento de Ofertas y Control de Finalización
