@@ -62,7 +62,7 @@ export default function Statistics() {
       offersByYears,
       selectedYear
     })
-  }, [selectedMonthFirst])
+  }, [selectedMonthFirst, monthlyOffers])
 
   useEffect(() => {
     updateSeriesData({
@@ -73,7 +73,7 @@ export default function Statistics() {
       offersByYears,
       selectedYear
     })
-  }, [selectedMonthSecond])
+  }, [selectedMonthSecond, monthlyOffers])
 
   return (
     <>
