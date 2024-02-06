@@ -36,7 +36,7 @@ export default function Dropdown({ buttonName, items, dropDownFunction }) {
       >
         {`${buttonName}: ${itemSelect}`}
         <svg
-          className={`ml-2.5 h-2.5 w-2.5 ${isDropdownOpen ? 'rotate-180' : ''}`}
+          className={`ml-2.5 size-2.5 ${isDropdownOpen ? 'rotate-180' : ''}`}
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

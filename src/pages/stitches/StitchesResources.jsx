@@ -1,9 +1,8 @@
 import {
-  calculateTimePerEmbroidery,
   calculateEmbroideryPerHour,
   calculateEmbroideryPrice,
-  calculateTotalTime,
-  calculateTotalPrice
+  calculateTimePerEmbroidery,
+  calculateTotalTime
 } from './functions'
 
 const listStyle =

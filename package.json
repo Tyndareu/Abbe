@@ -59,7 +59,7 @@
     "build": "vite build",
     "dev": "vite",
     "format": "prettier --write \"**/*.{js,jsx,json,css}\"",
-    "lint": "eslint --ext .js,.jsx ./src",
+    "lint": "eslint --ext .js,.jsx ./src --fix",
     "prepare": "husky install",
     "preview": "vite preview",
     "test": "vitest"

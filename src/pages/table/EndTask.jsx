@@ -1,17 +1,14 @@
 import { useState } from 'react'
-// Firebase
-import { updateOffer, Auth } from '../../firebase/Api'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { departmentList, today } from '../../components/Constants'
-// Components
-import Modal from '../../components/Modal'
-import { EndTaskButton } from '../../components/ClassColors'
-import { IconCheck } from '../../components/Icons'
-// Context
-import { useMainContext } from '../../context/MainContext'
-// Others
-import { toast } from 'sonner'
+
 import moment from 'moment'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { toast } from 'sonner'
+import { EndTaskButton } from '../../components/ClassColors'
+import { departmentList, today } from '../../components/Constants'
+import { IconCheck } from '../../components/Icons'
+import Modal from '../../components/Modal'
+import { useMainContext } from '../../context/MainContext'
+import { Auth, updateOffer } from '../../firebase/Api'
 
 export default function EndTask({ offer }) {
   const { department, setOffers } = useMainContext()
@@ -91,7 +88,6 @@ export default function EndTask({ offer }) {
         `Finalizar Tarea ${preparationSendTask} - ${today} ${currentTime} - ${user.email}`
       ]
     }
-    console.log({ preparacion: updatedOffer })
     await updateOffer(offer.id, updatedOffer).then(() => {
       toast.success('Oferta actualizada!')
       setOffers((prevOffers) => {

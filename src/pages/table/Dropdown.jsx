@@ -68,7 +68,7 @@ function Dropdown({ offer, options, field }) {
         {selected === options[0] || selected === '' ? 'Elegir' : selected}
 
         <svg
-          className={`ml-2.5 h-2.5 w-2.5 ${isOpen && 'rotate-180'}`}
+          className={`ml-2.5 size-2.5 ${isOpen && 'rotate-180'}`}
           aria-hidden="true"
           fill="none"
           viewBox="0 0 10 6"

@@ -32,7 +32,7 @@ export function SearchIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="absolute inset-y-0 left-3 my-auto h-4 w-4 text-gray-400"
+      className="absolute inset-y-0 left-3 my-auto size-4 text-gray-400"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -88,7 +88,7 @@ export function UpdateIcon() {
 export function ArrowDropdownIcon() {
   return (
     <svg
-      className="h-4 w-4 fill-current"
+      className="size-4 fill-current"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
     >

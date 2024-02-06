@@ -65,7 +65,6 @@ export default function Stitches() {
   ]
 
   const handleInputChange = (e) => {
-    console.log(e.target.value)
     const { name, value } = e.target
     if (e.target.name === 'speed') {
       if (e.target.value < 1) {
