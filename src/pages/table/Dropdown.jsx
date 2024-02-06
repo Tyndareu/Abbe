@@ -62,7 +62,7 @@ function Dropdown({ offer, options, field }) {
   return (
     <td ref={dropdownRef}>
       <button
-        className={`${btnClass} flex w-11/12 items-center justify-between rounded p-2 text-sm font-normal text-gray-200`}
+        className={`${btnClass} flex w-10/12 items-center justify-between rounded p-1 text-sm font-normal text-gray-200`}
         onClick={toggleDropdown}
       >
         {selected === options[0] || selected === '' ? 'Elegir' : selected}
@@ -89,7 +89,7 @@ function Dropdown({ offer, options, field }) {
             {options.map((item) => (
               <li
                 key={item}
-                className="block cursor-pointer p-2 transition-all duration-200 hover:bg-red-900 hover:font-bold"
+                className="block cursor-pointer p-2 transition-all duration-200 hover:bg-red-300 hover:font-bold"
                 onClick={() => handleChange(item)}
               >
                 {item}
