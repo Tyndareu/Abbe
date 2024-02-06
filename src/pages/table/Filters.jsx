@@ -13,7 +13,6 @@ import Dropdown from '../../components/Dropdown'
 import { isInitialState } from '../../components/Functions'
 import { SearchIcon } from '../../components/Icons'
 import { useMainContext } from '../../context/MainContext'
-// import newOfferPNG from '../../img/newOffer.png'
 
 export default function Filters({ clearFilters }) {
   const {
@@ -75,12 +74,6 @@ export default function Filters({ clearFilters }) {
         </form>
 
         {department === departmentList.Admin.home && (
-          // <img
-          //   onClick={() => setNewOffer(!newOffer)}
-          //   src={newOfferPNG}
-          //   alt="Nuevas ofertas"
-          //   className={`h-10 cursor-pointer ${newOffer ? null : 'grayscale'}`}
-          // />
           <p
             className={
               newOffer

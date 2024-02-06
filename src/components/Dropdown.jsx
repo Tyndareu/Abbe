@@ -32,7 +32,7 @@ export default function Dropdown({ buttonName, items, dropDownFunction }) {
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={handleToggleDropdown}
-        className={BlueButton}
+        className={`${BlueButton} items-center`}
         type="button"
       >
         <span className={BlueButtonSpan}></span>
