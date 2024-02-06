@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { BlueButton, BlueButtonSpan } from './ClassColors'
 
 export default function Dropdown({ buttonName, items, dropDownFunction }) {
   const [itemSelect, setItemSelect] = useState(items[0])
@@ -31,10 +32,12 @@ export default function Dropdown({ buttonName, items, dropDownFunction }) {
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={handleToggleDropdown}
-        className="flex w-full items-center justify-between rounded border border-transparent bg-blue-700/70 p-2 font-normal text-gray-200 transition-colors duration-300 hover:bg-blue-500/80"
+        className={BlueButton}
         type="button"
       >
+        <span className={BlueButtonSpan}></span>
         {`${buttonName}: ${itemSelect}`}
+
         <svg
           className={`ml-2.5 size-2.5 ${isDropdownOpen ? 'rotate-180' : ''}`}
           aria-hidden="true"
