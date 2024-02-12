@@ -48,6 +48,18 @@ export function filterOffersByMonth(offers) {
   return monthlyOffers
 }
 
+export function filterOffersByMonthEnd(offers) {
+  const monthlyOffers = { '00': [] }
+  offers.forEach((offer) => {
+    const month = offer.deliveryDate.split('-')[1]
+    if (!monthlyOffers[month]) {
+      monthlyOffers[month] = []
+    }
+    monthlyOffers[month].push(offer)
+  })
+  return monthlyOffers
+}
+
 export const calculateAverageDays = (totalDays, totalOffers) => {
   return totalDays > 0 ? Math.round(totalDays / totalOffers) : 0
 }
@@ -82,8 +94,6 @@ export function getDataFromOffers(offers) {
     if (offer.deletedDate) {
       return
     }
-
-    dataToCompare.totalOffers++
 
     if (offer.completedDate) {
       const createdDate = offer.offerDate.split('/').reverse().join('-')
@@ -127,25 +137,41 @@ export async function updateSeriesData({
   monthlyOffers,
   offersByYears,
   selectedMonth,
+  monthlyOffersEnd,
   selectedYear,
   setSeries,
   setSeriesDays
 }) {
-  if (!monthlyOffers || !offersByYears || !selectedMonth || !selectedYear) {
+  if (
+    !monthlyOffers ||
+    !monthlyOffersEnd ||
+    !offersByYears ||
+    !selectedMonth ||
+    !selectedYear
+  ) {
     return
   }
+
   const filteredOffers =
     selectedMonth === '00'
       ? offersByYears[selectedYear]
       : monthlyOffers[selectedMonth]
+  const filteredOffersEnd =
+    selectedMonth === '00'
+      ? offersByYears[selectedYear]
+      : monthlyOffersEnd[selectedMonth]
 
   const nonDeletedOffers = filteredOffers.filter((offer) => !offer.deletedDate)
+
+  const nonDeletedOffersEnd = filteredOffersEnd.filter(
+    (offer) => !offer.deletedDate
+  ).length
 
   const { dataToCompare, dataDays } = getDataFromOffers(nonDeletedOffers)
 
   const offerSeriesData = [
     nonDeletedOffers.length,
-    dataToCompare.totalOffers,
+    nonDeletedOffersEnd,
     dataToCompare.completedOffers,
     dataToCompare.openOffers,
     dataToCompare.beforeDeliveryDate,

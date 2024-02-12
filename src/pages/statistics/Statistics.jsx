@@ -6,6 +6,7 @@ import {
   charAtOffers,
   filterByYear,
   filterOffersByMonth,
+  filterOffersByMonthEnd,
   months,
   newMonthsFromYears,
   updateSeriesData
@@ -15,6 +16,7 @@ export default function Statistics() {
   const offers = Object.values(backup.__collections__.offers)
   const [offersByYears, setOffersByYears] = useState({})
   const [monthlyOffers, setMonthlyOffers] = useState({})
+  const [monthlyOffersEnd, setMonthlyOffersEnd] = useState({})
   const [selectedYear, setSelectedYear] = useState('2023')
 
   const [selectedMonthFirst, setSelectedMonthFirst] = useState()
@@ -39,13 +41,16 @@ export default function Statistics() {
     setSelectedMonthSecond(
       monthsFromYears && monthsFromYears[monthsFromYears.length - 1]
     )
-    offersByYears[selectedYear] &&
+    if (offersByYears[selectedYear]) {
       setMonthlyOffers(filterOffersByMonth(offersByYears[selectedYear]))
+      setMonthlyOffersEnd(filterOffersByMonthEnd(offersByYears[selectedYear]))
+    }
   }, [offersByYears])
 
   const selectYear = async (year) => {
     setSelectedYear(year)
     setMonthlyOffers(filterOffersByMonth(offersByYears[year]))
+    setMonthlyOffersEnd(filterOffersByMonthEnd(offersByYears[year]))
     monthsFromYears = newMonthsFromYears(offersByYears[year])
     setSelectedMonthFirst(monthsFromYears && monthsFromYears[0])
     setSelectedMonthSecond(
@@ -59,6 +64,7 @@ export default function Statistics() {
       setSeries: setSeriesFirst,
       setSeriesDays: setSeriesDaysFirst,
       monthlyOffers,
+      monthlyOffersEnd,
       offersByYears,
       selectedYear
     })
@@ -70,6 +76,7 @@ export default function Statistics() {
       setSeries: setSeriesSecond,
       setSeriesDays: setSeriesDaysSecond,
       monthlyOffers,
+      monthlyOffersEnd,
       offersByYears,
       selectedYear
     })
