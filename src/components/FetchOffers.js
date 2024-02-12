@@ -166,7 +166,7 @@ export const nextPage = async ({
       id: doc.id
     }))
 
-    setOffers((prevPedidos) => [...prevPedidos, ...newDocs])
+    setOffers((prevOffers) => [...prevOffers, ...newDocs])
   } catch (error) {
     console.error(error)
   }
