@@ -12,7 +12,7 @@ import Logo from '../img/logo.png'
 import { SingOutButton } from '../components/AuthButtons'
 // Firebase
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { Auth } from '../firebase/api'
+import { Auth } from '../firebase/Api'
 
 const buttonClassSelect = 'border-b-4 border-blue-500 text-gray-200'
 const buttonClassHover =

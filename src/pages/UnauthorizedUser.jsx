@@ -1,4 +1,4 @@
-import Logo from '../img/Logo.png'
+import Logo from '../img/logo.png'
 import { SingOutButton, SingInButton } from '../components/AuthButtons'
 export default function UnauthorizedUser() {
   return (
