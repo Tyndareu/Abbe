@@ -183,7 +183,7 @@ export default function Statistics() {
                 />
               </div>
               <h2 className="text-center text-blue-500">
-                Total de ofertas por comerciales
+                Total de ofertas por comercial
               </h2>
               <div>
                 <Chart

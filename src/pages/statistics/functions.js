@@ -97,9 +97,6 @@ export function getDataFromOffers(offers) {
   })
 
   offers.forEach((offer) => {
-    if (offer.deletedDate) {
-      return
-    }
 
     if (offer.completedDate) {
       const createdDate = offer.offerDate.split('/').reverse().join('-')
@@ -141,28 +138,8 @@ export function getDataFromOffers(offers) {
     } else {
       dataToCompare.openOffers++
     }
-    switch (offer.salesPerson) {
-      case salesPeopleList[0]:
-        salesPerson[salesPeopleList[0]]++
-        break
-      case salesPeopleList[1]:
-        salesPerson[salesPeopleList[1]]++
-        break
-      case salesPeopleList[2]:
-        salesPerson[salesPeopleList[2]]++
-        break
-      case salesPeopleList[3]:
-        salesPerson[salesPeopleList[3]]++
-        break
-      case salesPeopleList[4]:
-        salesPerson[salesPeopleList[4]]++
-        break
-      default:
-        salesPerson[salesPeopleList[5]]++
-        break
-    }
+    offer.salesPerson && offer.salesPerson !== 'Lorena' && salesPerson[offer.salesPerson]++
   })
-
   return { dataToCompare, dataDays, salesPerson }
 }
 export async function updateSeriesData({
@@ -226,7 +203,7 @@ export async function updateSeriesData({
     calculateAverageDays(dataDays.stockTotalDays, dataDays.stockTotalOffers)
   ]
 
-  setSeries([{ name: 'Ofertas', data: offerSeriesData }])
+  setSeries([{ name: 'Offers', data: offerSeriesData }])
   setSeriesDays([{ name: 'Days', data: daysSeriesData }])
   setSeriesSalesPerson([
     { name: 'Sales Person', data: Object.values(salesPerson) }
