@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { offerType } from '../../components/Constants'
+import { offerType, salesPeopleList } from '../../components/Constants'
 
 export const months = {
   '00': 'Todos',
@@ -90,6 +90,12 @@ export function getDataFromOffers(offers) {
     embroideryTotalOffers: 0
   }
 
+  const salesPerson = {}
+
+  salesPeopleList.forEach((element) => {
+    salesPerson[element] = 0
+  })
+
   offers.forEach((offer) => {
     if (offer.deletedDate) {
       return
@@ -116,22 +122,48 @@ export function getDataFromOffers(offers) {
         dataToCompare.beforeDeliveryDate++
       }
 
-      if (offer.offerType === offerType.Exterior) {
-        dataDays.exteriorTotalDays += days
-        dataDays.exteriorTotalOffers++
-      } else if (offer.offerType === offerType.Stock) {
-        dataDays.stockTotalDays += days
-        dataDays.stockTotalOffers++
-      } else if (offer.offerType === offerType.Embroidery) {
-        dataDays.embroideryTotalDays += days
-        dataDays.embroideryTotalOffers++
+      switch (offer.offerType) {
+        case offerType.Exterior:
+          dataDays.exteriorTotalDays += days
+          dataDays.exteriorTotalOffers++
+          break
+        case offerType.Stock:
+          dataDays.stockTotalDays += days
+          dataDays.stockTotalOffers++
+          break
+        case offerType.Embroidery:
+          dataDays.embroideryTotalDays += days
+          dataDays.embroideryTotalOffers++
+          break
+        default:
+          break
       }
     } else {
       dataToCompare.openOffers++
     }
+    switch (offer.salesPerson) {
+      case salesPeopleList[0]:
+        salesPerson[salesPeopleList[0]]++
+        break
+      case salesPeopleList[1]:
+        salesPerson[salesPeopleList[1]]++
+        break
+      case salesPeopleList[2]:
+        salesPerson[salesPeopleList[2]]++
+        break
+      case salesPeopleList[3]:
+        salesPerson[salesPeopleList[3]]++
+        break
+      case salesPeopleList[4]:
+        salesPerson[salesPeopleList[4]]++
+        break
+      default:
+        salesPerson[salesPeopleList[5]]++
+        break
+    }
   })
 
-  return { dataToCompare, dataDays }
+  return { dataToCompare, dataDays, salesPerson }
 }
 export async function updateSeriesData({
   monthlyOffers,
@@ -140,7 +172,8 @@ export async function updateSeriesData({
   monthlyOffersEnd,
   selectedYear,
   setSeries,
-  setSeriesDays
+  setSeriesDays,
+  setSeriesSalesPerson
 }) {
   if (
     !monthlyOffers ||
@@ -167,7 +200,8 @@ export async function updateSeriesData({
     (offer) => !offer.deletedDate
   ).length
 
-  const { dataToCompare, dataDays } = getDataFromOffers(nonDeletedOffers)
+  const { dataToCompare, dataDays, salesPerson } =
+    getDataFromOffers(nonDeletedOffers)
 
   const offerSeriesData = [
     nonDeletedOffers.length,
@@ -194,6 +228,9 @@ export async function updateSeriesData({
 
   setSeries([{ name: 'Ofertas', data: offerSeriesData }])
   setSeriesDays([{ name: 'Days', data: daysSeriesData }])
+  setSeriesSalesPerson([
+    { name: 'Sales Person', data: Object.values(salesPerson) }
+  ])
 }
 export const charAtOffers = {
   chart: {
@@ -394,6 +431,103 @@ export const charAtDays = {
         { title: 'Totales', cols: 1 },
         { title: 'Tipo de Ofertas', cols: 3 }
       ]
+    }
+  },
+  stroke: {
+    width: 2,
+    colors: ['#fff']
+  },
+  tooltip: {
+    theme: 'dark',
+    x: {
+      show: true
+    }
+  },
+  legend: {
+    show: false
+  },
+  grid: {
+    borderColor: '#121212',
+    padding: {
+      right: 25,
+      left: 15
+    }
+  }
+}
+
+export const charAtSalesPerson = {
+  chart: {
+    background: '#222528',
+    foreColor: '#2196f3',
+    height: 250,
+    id: 'JjcCT26',
+    toolbar: {
+      show: false
+    },
+    type: 'bar',
+    width: 400
+  },
+  colors: ['#d9ceff', '#bea6ff', '#9f75ff', '#843dff', '#7916ff', '#6b04fd'],
+  plotOptions: {
+    bar: {
+      distributed: true,
+      borderRadius: 5,
+      borderRadiusApplication: 'end',
+      borderRadiusWhenStacked: 'last',
+      dataLabels: {
+        position: 'top' // top, center, bottom
+      }
+    },
+    treemap: {
+      dataLabels: {
+        format: 'scale'
+      }
+    },
+    radialBar: {
+      hollow: {
+        background: '#fff'
+      }
+    }
+  },
+
+  dataLabels: {
+    enabled: true,
+    offsetY: -20,
+    style: {
+      colors: ['#fff']
+    },
+    dropShadow: {
+      enabled: false
+    }
+  },
+  yaxis: {
+    axisBorder: {
+      show: false
+    },
+    axisTicks: {
+      show: false
+    },
+    labels: {
+      show: true
+    }
+  },
+  xaxis: {
+    labels: {
+      show: true
+    },
+    position: 'bottom',
+    axisBorder: {
+      show: true
+    },
+    axisTicks: {
+      show: true
+    },
+    categories: salesPeopleList,
+    group: {
+      style: {
+        fontSize: '15px',
+        fontWeight: 700
+      }
     }
   },
   stroke: {

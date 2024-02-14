@@ -4,6 +4,7 @@ import backup from '../../json/backup.json'
 import {
   charAtDays,
   charAtOffers,
+  charAtSalesPerson,
   filterByYear,
   filterOffersByMonth,
   filterOffersByMonthEnd,
@@ -27,6 +28,9 @@ export default function Statistics() {
 
   const [seriesDaysFirst, setSeriesDaysFirst] = useState([])
   const [seriesDaysSecond, setSeriesDaysSecond] = useState([])
+
+  const [seriesSalesPersonFirst, setSeriesSalesPersonFirst] = useState([])
+  const [seriesSalesPersonSecond, setSeriesSalesPersonSecond] = useState([])
 
   let monthsFromYears =
     offersByYears && newMonthsFromYears(offersByYears[selectedYear])
@@ -63,6 +67,7 @@ export default function Statistics() {
       selectedMonth: selectedMonthFirst,
       setSeries: setSeriesFirst,
       setSeriesDays: setSeriesDaysFirst,
+      setSeriesSalesPerson: setSeriesSalesPersonFirst,
       monthlyOffers,
       monthlyOffersEnd,
       offersByYears,
@@ -75,6 +80,7 @@ export default function Statistics() {
       selectedMonth: selectedMonthSecond,
       setSeries: setSeriesSecond,
       setSeriesDays: setSeriesDaysSecond,
+      setSeriesSalesPerson: setSeriesSalesPersonSecond,
       monthlyOffers,
       monthlyOffersEnd,
       offersByYears,
@@ -172,6 +178,21 @@ export default function Statistics() {
                 <Chart
                   options={charAtDays}
                   series={index === 0 ? seriesDaysFirst : seriesDaysSecond}
+                  type="bar"
+                  height={300}
+                />
+              </div>
+              <h2 className="text-center text-blue-500">
+                Total de ofertas por comerciales
+              </h2>
+              <div>
+                <Chart
+                  options={charAtSalesPerson}
+                  series={
+                    index === 0
+                      ? seriesSalesPersonFirst
+                      : seriesSalesPersonSecond
+                  }
                   type="bar"
                   height={300}
                 />
