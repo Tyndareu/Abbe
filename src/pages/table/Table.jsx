@@ -1,14 +1,14 @@
 // Context
 import { useMainContext } from '../../context/MainContext'
 // Components
-import { IconCheck } from '../../components/Icons'
-import Dropdown from './Dropdown'
-import DeliveryDate from './DeliveryDate'
-import CompletedDate from './CompletedDate'
 import {
   LegendDateEndColor,
   LegendOfferTypeColor
 } from '../../components/ColorLegend'
+import { IconCheck } from '../../components/Icons'
+import CompletedDate from './CompletedDate'
+import DeliveryDate from './DeliveryDate'
+import Dropdown from './Dropdown'
 // Constants
 import {
   departmentList,
@@ -18,9 +18,8 @@ import {
   pickingAssignments
 } from '../../components/Constants'
 import Form from '../form/Form'
-import EndTask from './EndTask'
 import DepartamentsRow from './DepartamentsRow'
-import NewOffer from './newOffer'
+import EndTask from './EndTask'
 
 export default function Table({ offers }) {
   const {
@@ -133,9 +132,12 @@ export default function Table({ offers }) {
                     className="relative p-1"
                   >
                     {offer.client}
-                    {department === departmentList.Admin.home && (
-                      <NewOffer offer={offer} />
-                    )}
+                    {department === departmentList.Admin.home &&
+                      offer.newDate && (
+                        <p className="absolute right-2 top-1 w-8 font-extrabold">
+                          New
+                        </p>
+                      )}
                   </td>
                   {department !== departmentList.GestionNav.endOffers &&
                     department !== departmentList.GestionNav.deletedOffers && (
