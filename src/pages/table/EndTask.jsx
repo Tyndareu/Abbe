@@ -25,7 +25,7 @@ export default function EndTask({ offer }) {
         break
       case departmentList.Admin.stamping:
         offer.department.stamping = false
-        offer.department.preparation = true
+        offer.department.confection = true
         break
       case departmentList.Admin.embroideries:
         offer.department.embroideries = false
@@ -116,14 +116,14 @@ export default function EndTask({ offer }) {
             onConfirm={handleEndTask}
             content={
               department === departmentList.Admin.warehouse
-                ? '¿Confirma que quiere finalizar la Oferta?'
+                ? `¿Confirma que quiere finalizar la Oferta "${offer.offerNumber}"?`
                 : department === departmentList.Admin.picaje
-                  ? '¿Confirma que quiere enviar la Oferta a Preparación?'
+                  ? `¿Confirma que quiere enviar la Oferta "${offer.offerNumber}" a Preparación?`
                   : department === departmentList.Admin.stamping
-                    ? '¿Confirma que quiere enviar la Oferta a Preparación?'
+                    ? `¿Confirma que quiere enviar la Oferta "${offer.offerNumber}" a Confección?`
                     : department === departmentList.Admin.embroideries
-                      ? '¿Confirma que quiere enviar la Oferta a Confección?'
-                      : '¿Confirma que quiere enviar la Oferta a Almacén?'
+                      ? `¿Confirma que quiere enviar la Oferta "${offer.offerNumber}" a Confección?`
+                      : `¿Confirma que quiere enviar la Oferta "${offer.offerNumber}" a Almacén?`
             }
             title="¿Terminar tarea?"
           />
@@ -158,8 +158,8 @@ export default function EndTask({ offer }) {
             onConfirm={handleEndTaskPreparationConfirm}
             content={
               preparationSendTask === departmentList.Admin.embroideries
-                ? '¿Confirma que quiere enviar la Oferta a Bordados?'
-                : '¿Confirma que quiere enviar la Oferta a Confección?'
+                ? `¿Confirma que quiere enviar la Oferta "${offer.offerNumber}" a Bordados?`
+                : `¿Confirma que quiere enviar la Oferta "${offer.offerNumber}" a Confección?`
             }
             title="¿Terminar tarea?"
           />

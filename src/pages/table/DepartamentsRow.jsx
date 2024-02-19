@@ -8,7 +8,7 @@ const getDepartmentText = (offer) => {
   return deps.join(' ')
 }
 
-const DepartamentsRow = ({ offer, onClick }) => {
+const DepartmentsRow = ({ offer, onClick }) => {
   const noDepartments = !Object.values(offer.department).some((val) => val)
   const text = noDepartments ? 'Sin Departamento' : getDepartmentText(offer)
 
@@ -24,4 +24,4 @@ const DepartamentsRow = ({ offer, onClick }) => {
   )
 }
 
-export default DepartamentsRow
+export default DepartmentsRow
