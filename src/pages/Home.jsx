@@ -201,9 +201,9 @@ function Home() {
         </>
       )}
       {stitches && <Stitches />}
-      <div className='flex flex-wrap gap-2'>
-        {statistics && <Statistics />}
-        {statistics && <Statistics />}
+      <div className="flex flex-wrap gap-2">
+        {statistics && <Statistics year={'2023'} />}
+        {statistics && <Statistics year={'2024'} />}
       </div>
     </>
   )

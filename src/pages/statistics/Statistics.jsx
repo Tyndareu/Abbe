@@ -13,12 +13,12 @@ import {
   updateSeriesData
 } from './functions'
 
-export default function Statistics() {
+export default function Statistics({ year }) {
   const offers = Object.values(backup.__collections__.offers)
   const [offersByYears, setOffersByYears] = useState({})
   const [monthlyOffers, setMonthlyOffers] = useState({})
   const [monthlyOffersEnd, setMonthlyOffersEnd] = useState({})
-  const [selectedYear, setSelectedYear] = useState('2023')
+  const [selectedYear, setSelectedYear] = useState(year)
   const [selectedMonth, setSelectedMonth] = useState()
   const [series, setSeries] = useState([])
   const [seriesDays, setSeriesDays] = useState([])
@@ -38,7 +38,7 @@ export default function Statistics() {
       setMonthlyOffers(filterOffersByMonth(offersByYears[selectedYear]))
       setMonthlyOffersEnd(filterOffersByMonthEnd(offersByYears[selectedYear]))
     }
-  }, [offersByYears])
+  }, [offersByYears, selectedYear])
 
   const selectYear = async (year) => {
     setSelectedYear(year)
@@ -103,7 +103,7 @@ export default function Statistics() {
               month !== '00' && (
                 <button
                   onClick={() => setSelectedMonth(month)}
-                  className={`rounded p-1 px-2 transition-colors duration-300
+                  className={`rounded p-1 transition-colors duration-300
                   ${
                     month === selectedMonth
                       ? 'bg-blue-500 text-gray-200 hover:bg-blue-700'
