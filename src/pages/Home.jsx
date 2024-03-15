@@ -201,7 +201,10 @@ function Home() {
         </>
       )}
       {stitches && <Stitches />}
-      {statistics && <Statistics />}
+      <div className='flex flex-wrap gap-2'>
+        {statistics && <Statistics />}
+        {statistics && <Statistics />}
+      </div>
     </>
   )
 }
