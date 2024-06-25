@@ -44,6 +44,7 @@ export const salesPeopleList = [
   'Virginia',
   'Pepi',
   'Miguel',
+  'Toni',
   'Otros'
 ]
 
